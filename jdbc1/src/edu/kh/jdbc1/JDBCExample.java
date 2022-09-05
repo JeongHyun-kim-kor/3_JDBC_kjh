@@ -59,7 +59,7 @@ public class JDBCExample {
 			// 2. 연결 정보를 담은 Connection을 생성
 			  // -> DrivermManager 객체를 이용해서 Connection 객체를 만들어 얻어옴!
 				
-			String type = "jdbc:oracle:thin:@";
+			String type = "jdbc:oracle:thin:@"; // JDBC 드라이버의 종류
 			
 			String ip = "localhost";  // DB 서버 컴퓨터 IP
 			// localhost == 127.0.0.1 (loop back ip)
@@ -67,7 +67,7 @@ public class JDBCExample {
 			
 			String port = ":1521"; // 포트번호
 			// 1521(기본값)
-//			/ 9000( 서버컴)
+  			// 9000( 서버컴)
 			
 			String sid = ":XE"; // DB이름
 			
