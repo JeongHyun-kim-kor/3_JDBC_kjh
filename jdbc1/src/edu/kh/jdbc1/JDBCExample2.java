@@ -31,8 +31,8 @@ public class JDBCExample2 {
 			String user = "kh_kjh"; 
 			String pw = "kh1234";
 			
-			conn = DriverManager.getConnection(type + ip + port + sid, user, pw); // 설명 다시 듣기(처음설명)
-			
+			conn = DriverManager.getConnection(type + ip + port + sid, user, pw); 
+											
 			System.out.println("입력 받은 급여보다 많이 받는(초과) 직원 조회 > ");
 			System.out.print("급여 입력 : ");
 			

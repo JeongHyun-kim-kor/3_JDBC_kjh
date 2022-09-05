@@ -81,6 +81,8 @@ public class JDBCExample {
 			//Connection 객체를 만드는 역할
 			
 		conn = DriverManager.getConnection(type + ip + port + sid, user, pw);
+			// 기본생성 sid,user,pw / sid 앞에 type + ip + port 붙이기
+			// type + ip + port + sid = url
 			// SQLException : DB관련 최상위 예외
 		
 		//중간 확인
