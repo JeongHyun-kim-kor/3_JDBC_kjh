@@ -19,7 +19,7 @@ public class JDBCExample {
 		// 1. java의 JDBC관련 인터페이스
 		// 2. DBMS(Oracle)
 		// 3. Oracle에서 Java애플리케이션과 연결할 때 사용할
-		//    JDBC를 상속 받아 구현한 클래스 모음(ojdbc11.jar 라이브러리)
+		//    JDBC를 상속 받아 구현한 클래스 모음(ojdbc11.jar 라이브러리)  == ojdbc 
 		//     -> OracleDriver.class(JDBC 드라이버) 이용
 		
 	//================ 09 05 5교시
@@ -80,6 +80,7 @@ public class JDBCExample {
 			// 메모리에 로드된 JDBC 드라이버를 이용해서 
 			//Connection 객체를 만드는 역할
 			
+			// 오라클 드라이버
 		conn = DriverManager.getConnection(type + ip + port + sid, user, pw);
 			// 기본생성 sid,user,pw / sid 앞에 type + ip + port 붙이기
 			// type + ip + port + sid = url
@@ -119,7 +120,7 @@ public class JDBCExample {
 			//  		없으면 false 반환
 			
 			// rs.get자료형("컬럼명")
-			String empId = rs.getString("EMP_ID"); 
+			String empId = rs.getString("EMP_ID");  // DB에선 EMP_ID = varchar2 타입
 			// 현재 행의 "EMP_ID" 문자열 컬럼의 값을 얻어옴
 			
 			String empName = rs.getString("EMP_NAME"); 
