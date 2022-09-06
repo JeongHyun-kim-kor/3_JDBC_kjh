@@ -72,6 +72,8 @@ public class JDBCExample4 {
 				int salary = rs.getInt("SALARY");
 				int annualIncome = salary*12;
 				
+//				rs.getchar
+				
 				Employee emp = new Employee(empName, jobName, salary, annualIncome);
 				
 				list.add(emp);
