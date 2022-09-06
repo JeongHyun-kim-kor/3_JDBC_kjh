@@ -3,6 +3,7 @@ package edu.kh.jdbc1;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +48,9 @@ public class JDBCExample3 {
 			
 			// Statement가 실행할 SQL
 			String sql = "SELECT EMP_NAME, NVL(DEPT_TITLE, '부서없음') AS DEPT_TITLE, SALARY"
-					+ "FROM EMPLOYEE"
-					+ "LEFT JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)"
-					+ "WHERE NVL(DEPT_TITLE, '부서없음') = '" + input + "'";
+					+ " FROM EMPLOYEE"
+					+ " LEFT JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID)"
+					+ " WHERE NVL(DEPT_TITLE, '부서없음') = '" + input + "'";
 			
 			// (중요!!) 
 			// Java에서 작성되는 SQL에 
@@ -72,11 +73,43 @@ public class JDBCExample3 {
 			// < >  --> vo
 			List<Emp> list =  new ArrayList<>(); // 타입추론 -> <Emp> 안해도 된다.
 			
-			while(rs.next()) {
+			//0906 3교시
+			
+			while(rs.next()) {  // 다음행으로 이동해서 해당 행에 데이터가 있으면 true
+				
+				// 현재 행에 존재하는 컬럼 값 얻어오기
+				String empName = rs.getString("EMP_NAME");
+				String deptTitle = rs.getString("DEPT_TITLE");
+				int salary = rs.getInt("SALARY");
+				
+				// Emp 객체를 생성해서 컬럼값 담기
+				Emp emp = new Emp(empName, deptTitle, salary);
+				
+				// 생성된 Emp객체를 List에 추가
+				list.add(emp);
 				
 				
 				
 			}
+			
+			
+			// 만약 List에 추가된 Emp 객체가 없다면 "조회 결과가 없습니다."
+			// 있다면 순차적으로 출력
+			
+			if(list.isEmpty()) { // List가 비어있을 경우 true
+				
+				System.out.println("조회 결과가 없습니다. ");
+				
+			} else {
+				
+				//향상된 for문
+				for(Emp emp: list) {
+					System.out.println(emp);
+				}
+				
+			}
+		
+			
 			
 		} catch (Exception e) {
 			// 예외 최상위 부모인 Exception을 catch문에 작성하여 
@@ -85,6 +118,15 @@ public class JDBCExample3 {
 			
 		} finally {
 			
+			try {
+				if(rs != null)rs.close();
+				if(stmt != null)stmt.close();
+				if(conn != null)conn.close();
+				
+				
+			} catch(SQLException e 	) {
+				e.printStackTrace();
+			}
 			
 			
 		}
