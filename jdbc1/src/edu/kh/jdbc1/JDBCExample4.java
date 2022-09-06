@@ -24,6 +24,7 @@ public class JDBCExample4 {
 		// 선동일 / 대표 / 8000000 / 96000000
 		// 송종기 / 부장 / 6000000 / 72000000 
 		// ....
+		
 		Scanner sc = new Scanner(System.in);
 		
 		Connection conn = null;
@@ -51,8 +52,9 @@ public class JDBCExample4 {
 			String pw = "kh1234";
 			
 			conn = DriverManager.getConnection(type + ip + port + sid, user, pw); 
-//			conn = DriverManager.getConnection(url , user,pw);	//  url, user, pw
-		
+//			conn = DriverManager.getConnection(url ,                   user,pw);	
+//			conn = DriverManager.getConnection(sid, user, pw) 
+			
 			String sql = "SELECT EMP_NAME, JOB_NAME, SALARY, (SALARY*12)"
 					+ " FROM EMPLOYEE"
 					+ " JOIN JOB USING (JOB_CODE)"

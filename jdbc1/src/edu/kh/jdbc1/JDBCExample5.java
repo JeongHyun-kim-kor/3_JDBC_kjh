@@ -79,8 +79,29 @@ public class JDBCExample5 {
 				//list에 emp 객체 추가
 				list.add(emp);
 				
-			} // while문 끝
+			} // while문 끝0
 				
+			// 0906 7교시
+			// 조회 결과가 없는 경우
+			if(list.size()==0) {
+			// 같은거 = if(list.isEmpty())
+				System.out.println("조회 결과가 없습니다. ");
+			} else {
+				
+				// 일반 for문
+				for(int i =0; i < list.size();i++) {
+					
+					System.out.printf("%02d번) %s / %s / %c\n",
+									  i+1,
+									  list.get(i).getEmpName(),
+									  list.get(i).getHireDate(),
+									  list.get(i).getGender()
+									  	);
+					
+				}
+				
+			}
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
