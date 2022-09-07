@@ -204,27 +204,41 @@ public class EmployeeView {
 		System.out.print("전화번호(-제외) : ");
 		String phone = sc.next();
 		
-		System.out.print("부서코드(D1~D9) : ");
+		System.out.print("부서코드(D1~D9) : "); // vo에 추가
 		String deptCode = sc.next();
 		
-		System.out.print("직급코드(J1~J7) : ");
+		System.out.print("직급코드(J1~J7) : ");// vo에 추가
 		String jobCode = sc.next();
 		
-		System.out.print("급여등급(S1~S6) : ");
+		System.out.print("급여등급(S1~S6) : ");// vo에 추가
 		String salLevel = sc.next();
 		
 		System.out.print("급여 : ");
 		int salary = sc.nextInt();
 		
-		System.out.print("보너스 : ");
+		System.out.print("보너스 : ");// vo에 추가
 		double bonus = sc.nextDouble();
 		
-		System.out.print("사수번호 : ");
+		System.out.print("사수번호 : ");// vo에 추가
 		int managerId = sc.nextInt();
 		
+		// 입력받은 값을
+		// Employee객체에 담아서 DAO로 전달
 		
+		Employee emp = new Employee(empid, empName, empNo, email, phone,
+				salary, deptCode, jobCode, salLevel, bonus, managerId);
 		
+		int result = dao.insertEmployee(emp);  // insert delete 반환값 0 또는 1이상(행의 개수?)
+		// INSERT, DELETE UPDATE, 같은 DML 구문은
+		// 수행 후 테이블에 반영된 행의 개수를 반환함
+		// -> 조건이 잘못된 경우 반영된 행이 없으므로 0 반환
 		
+		if(result > 0) { // DML 구문 성공시
+			System.out.println("사원 정보 추가 성공");
+			
+		}else { //DML 구문 실패시
+			System.out.println("사원 정보 추가 실패..");
+		}
 		
 	}
 
