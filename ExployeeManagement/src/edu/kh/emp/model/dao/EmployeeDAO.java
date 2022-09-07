@@ -261,7 +261,7 @@ public class EmployeeDAO {
 				int empId = rs.getInt("EMP_ID");
 				
 				String empName = rs.getString("EMP_NAME");
-				String empNo = rs.getString("EMP_NO");
+//				String empNo = rs.getString("EMP_NO");
 				String email = rs.getString("EMAIL");
 				String phone = rs.getString("PHONE");
 				String departmentTitle = rs.getString("DEPT_TITLE");
@@ -283,12 +283,13 @@ public class EmployeeDAO {
 			if(rs != null) rs.close();
 			if(pstmt != null) pstmt.close();
 			if(conn != null) conn.close();
+			
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
-		
+		// 결과 반환
 		return emp;
 	}
 

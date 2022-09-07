@@ -54,7 +54,7 @@ public class EmployeeView {
 				
 				switch(input) {
 				
-				case 1: break;
+				case 1: insertEmployee(); break;
 				case 2: selectAll(); break;
 				case 3: selectEmpId(); break;
 				case 4: break;
@@ -62,7 +62,7 @@ public class EmployeeView {
 				case 6: break;
 				case 7: break;
 				case 8: break;
-				case 9: break;
+				case 9: selectEmpNo(); break;
 				case 0: System.out.println("프로그램을 종료합니다 ... "); break;
 				default : System.out.println("메뉴에 존재하는 번호만 입력하세요. ");
 				
@@ -84,7 +84,6 @@ public class EmployeeView {
 		
 		
 	}
-
 
 	/**
 	 *  전체 사원 조회
@@ -124,7 +123,7 @@ public class EmployeeView {
 	/**
 	 * 사번이 일치하는 사원 정보 조회
 	 */
-	private void selectEmpId() {
+	public void selectEmpId() {
 
 		System.out.println("<사번이 일치하는 사원 정보 조회>");
 		
@@ -175,33 +174,77 @@ public class EmployeeView {
 		System.out.println("주민등록번호가 일치하는 사원 정보 조회");
 		
 		System.out.print("주민등록번호 입력 : ");
-		String empNo = sc.nextLine();
+		String empNo = sc.next();
 		
-		Employee emp = dao.selectEmpNo(empNo){
+		Employee emp = dao.selectEmpNo(empNo);
 			
 			
 		printOne(emp);
 		}
+	
+	/**
+	 * 새로운 사원 정보 추가
+	 */
+	public void insertEmployee() {
+		System.out.println("<사원 정보 추가>");
+		
+		// 사번
+		int empid = inputEmpId();
+		
+		// 이름
+		System.out.print("이름 : ");
+		String empName = sc.next();
+		
+		System.out.print("주민등록번호 : ");
+		String empNo = sc.next();
+		
+		System.out.print("이메일 : ");
+		String email = sc.next();
+		
+		System.out.print("전화번호(-제외) : ");
+		String phone = sc.next();
+		
+		System.out.print("부서코드(D1~D9) : ");
+		String deptCode = sc.next();
+		
+		System.out.print("직급코드(J1~J7) : ");
+		String jobCode = sc.next();
+		
+		System.out.print("급여등급(S1~S6) : ");
+		String salLevel = sc.next();
+		
+		System.out.print("급여 : ");
+		int salary = sc.nextInt();
+		
+		System.out.print("보너스 : ");
+		double bonus = sc.nextDouble();
+		
+		System.out.print("사수번호 : ");
+		int managerId = sc.nextInt();
+		
+		
+		
+		
+		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
