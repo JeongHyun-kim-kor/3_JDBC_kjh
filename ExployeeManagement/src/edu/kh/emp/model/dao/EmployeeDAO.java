@@ -2,6 +2,7 @@ package edu.kh.emp.model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,11 +18,26 @@ public class EmployeeDAO {
 
 	// JDBC 객체 참조 변수로 필드 선언(class 내부에서 공통 사용)
 	
-	private String driver ="oracle.jdbc.driver.OracleDriver";
 	private Connection conn;  // 필드(Heap, 변수가 비어있을 수 없음)
 	private Statement stmt;   // -> JVM이 지정한 기본값으로 초기화
 	private ResultSet rs;	  // -> 참조형의 초기값은 null(별도 초기화 필요없다)
 	
+	private PreparedStatement pstmt;
+	// Statement의 자식으로 향상된 기능을 제공
+	// -> ? 기호 사용(placeholder, 위치홀더)를 이용해서
+	// 	  SQL에 작성되어지는 리터럴을 동적으로 제어함
+	
+	// SQL ? 기호에 추가되는 값은 
+	// 숫자인 경우 '' 없이 대입
+	// 문자열인 경우 ''가 자동으로 추가되어 대입
+	
+	
+	
+	
+	
+	
+	
+	private String driver ="oracle.jdbc.driver.OracleDriver";
 	private String url= "jdbc:oracle:thin:@localhost:1521:XE";
 	private String user = "kh_kjh";
 	private String pw = "kh1234";
@@ -129,7 +145,7 @@ public class EmployeeDAO {
 			String sql = "SELECT EMP_ID, EMP_NAME, EMP_NO, EMAIL, PHONE,"
 					+ "		NVL(DEPT_TITLE, '부서없음') DEPT_TITLE,"
 					+ "		JOB_NAME, SALARY\r\n"
-					+ " FROM EMPLOYEE \r\n"
+					+ " FROM EMPLOYEE "
 					+ " LEFT JOIN DEPARTMENT ON (DEPT_ID = DEPT_CODE)"
 					+ " JOIN JOB USING (JOB_CODE)"
 					+ " WHERE EMP_ID = '"+empId+"'";
@@ -189,6 +205,96 @@ public class EmployeeDAO {
 		// 결과 반환
 		return emp;
 	}
+
+
+
+	/** 주민등록번호가 일치하는 사원 정보 조회 DAO
+	 * @param empNo
+	 * @return emp
+	 */
+	public Employee selectEmpNo(String empNo) {
+
+		// 결과 저장용 변수 선언
+		Employee emp = null;
+		
+		try {
+			// Connection 생성
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, pw);
+			
+			// SQL 작성
+			String sql = "SELECT EMP_ID, EMP_NAME, EMP_NO, EMAIL, PHONE,"
+					+ "		NVL(DEPT_TITLE, '부서없음') DEPT_TITLE,"
+					+ "		JOB_NAME, SALARY"
+					+ " FROM EMPLOYEE"
+					+ " LEFT JOIN DEPARTMENT ON (DEPT_ID = DEPT_CODE)"
+					+ " JOIN JOB USING (JOB_CODE)"
+					+ " WHERE EMP_NO = ? ";  // '621231-1985634' 삭제 -> ? 작성
+									// placeholder
+			
+					// Statement 객체 사용시 순서
+					// SQL 작성 -> Statement 생성 -> SQL 수행 후 결과 반환
+			
+					// PreparedStatement  객체 사용 시 순서
+					// SQL 작성 -> 
+					// PreparedStatement 객체 생성(?가 포함된 SQL을 매개변수로 사용)
+					// -> ?에 알맞은 값 대입
+					// -> SQL 수행 후 결과 반환
+					
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ?에 알맞은 값 대입
+			pstmt.setString(1, empNo);
+			
+			// SQL 수행 후 결과 반환
+			rs = pstmt.executeQuery(); // sql대입 X
+			// 이미 pstmt에 sql이 적재되어있는 상태
+			// PreparedStatement는 객체 생성시 이미 SQL이 담겨져 있는 상태이므로 
+			// SQL 수행 시 매개변수로 전달할 필요가 없다.
+			
+			// -> 실수로 SQL을 매개변수에 추가하면
+			// ?에 추가했던 값이 모두 사라져 수행 시 오류 발생
+			
+			if(rs.next()) {
+				
+				int empId = rs.getInt("EMP_ID");
+				
+				String empName = rs.getString("EMP_NAME");
+				String empNo = rs.getString("EMP_NO");
+				String email = rs.getString("EMAIL");
+				String phone = rs.getString("PHONE");
+				String departmentTitle = rs.getString("DEPT_TITLE");
+				String jobName = rs.getString("JOB_NAME");
+				int salary = rs.getInt("SALARY");
+				
+				// 조회 결과를 담은 Employee 객체 생성 후
+				// 결과 저장용 변수 emp에 대입
+				emp =new Employee(empId, empName, empNo, email,
+						phone, departmentTitle, jobName, salary);
+				
+			}
+			
+			
+		} catch(Exception e ) {
+			e.printStackTrace();
+		} finally {
+			try {
+			if(rs != null) rs.close();
+			if(pstmt != null) pstmt.close();
+			if(conn != null) conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return emp;
+	}
+
+
+
+	
 	
 	
 	

@@ -42,6 +42,9 @@ public class EmployeeView {
 				System.out.println("6. 입력 받은 부서와 일치하는 모든 사원 정보 조회");
 				System.out.println("7. 입력 받은 급여 이상을 받는 모든 사원 정보 조회");
 				System.out.println("8. 부서별 급여 합 전체 조회");
+				
+				System.out.println("9. 주민등록번호가 일치하는 사원 정보 조회"); // 추가
+				
 				System.out.println("0. 프로그램 종료");
 				
 				System.out.print("메뉴 선택 >> ");
@@ -59,6 +62,7 @@ public class EmployeeView {
 				case 6: break;
 				case 7: break;
 				case 8: break;
+				case 9: break;
 				case 0: System.out.println("프로그램을 종료합니다 ... "); break;
 				default : System.out.println("메뉴에 존재하는 번호만 입력하세요. ");
 				
@@ -131,18 +135,70 @@ public class EmployeeView {
 		// 조회된 사원 정보 반환 받기
 		Employee emp =  dao.selectEmpId(empId);
 		
+		printOne(emp); // 조회 결과 출력
 	}
 
 	/** 사번을 입력받아 반환하는 메서드
 	 * @return
 	 */
 	public int inputEmpId() {
-		System.out.print("사버 입력 : ");
+		System.out.print("사번 입력 : ");
 		int empId = sc.nextInt();
 		sc.nextLine(); // 버퍼에 남은 개행문자 제거
 		
 		return empId;
 	}
+	
+	/** 사원 1명 정보 출력
+	 * @param emp
+	 */
+	public void printOne(Employee emp) {
+		
+		if(emp == null) {
+	          System.out.println("조회된 사원 정보가 없습니다.");
+	          
+	       } else {
+	          System.out.println("사번 |   이름  | 주민 등록 번호 |        이메일        |   전화 번호   | 부서 | 직책 | 급여" );
+	          System.out.println("------------------------------------------------------------------------------------------------");
+	             System.out.printf(" %2d  | %4s | %s | %20s | %s | %s | %s | %d\n",
+	                   emp.getEmpId(), emp.getEmpName(), emp.getEmpNo(), emp.getEmail(), 
+	                   emp.getPhone(), emp.getDepartmentTitle(), emp.getJobName(), emp.getSalary());
+	          
+	       }
+		
+	}
+	
+	/**
+	 * 주민등록번호가 일치하는 사원 정보 조회
+	 */
+	public void selectEmpNo() {
+		System.out.println("주민등록번호가 일치하는 사원 정보 조회");
+		
+		System.out.print("주민등록번호 입력 : ");
+		String empNo = sc.nextLine();
+		
+		Employee emp = dao.selectEmpNo(empNo){
+			
+			
+		printOne(emp);
+		}
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
