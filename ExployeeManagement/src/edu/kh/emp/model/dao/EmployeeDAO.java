@@ -417,6 +417,11 @@ public class EmployeeDAO {
 				if(pstmt != null) pstmt.close();
 				if(conn != null) conn.close();
 				
+				while(rs.next()) {
+					
+					
+					
+				}
 				
 				
 			}catch(Exception e) {
@@ -466,6 +471,125 @@ public class EmployeeDAO {
 			
 		}
 		return result;
+	}
+
+
+
+	public List<Employee> selectDeptEmp(String dept) {
+		
+		List <Employee> empList = new ArrayList<>();
+		
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url,user,pw);
+			
+			String sql ="SELECT EMP_ID ,EMP_NAME, EMP_NO, EMAIL, PHONE, \r\n"
+					+ "NVL(DEPT_TITLE,'부서없음') DEPT_TITLE, JOB_NAME, SALARY \r\n"
+					+ "FROM EMPLOYEE \r\n"
+					+ "LEFT JOIN DEPARTMENT ON DEPT_CODE = DEPT_ID\r\n"
+					+ "JOIN JOB USING(JOB_CODE) \r\n"
+					+ "WHERE DEPT_CODE = '"+dept+"'";
+					
+					
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				int empId = rs.getInt("EMP_ID");
+				String empName = rs.getString("EMP_NAME");
+				String empNo = rs.getString("EMP_NO");
+				String email = rs.getString("EMAIL");
+				String phone = rs.getString("PHONE");
+				String departmentTitle = rs.getString("DEPT_TITLE");
+				String jobName = rs.getString("JOB_NAME");
+				int salary = rs.getInt("SALARY");
+				
+				Employee emp = new Employee(empId, empName, empNo, email, phone,
+						departmentTitle, jobName, salary);
+				
+				empList.add(emp);
+			}
+			
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+				
+				
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return empList;
+	}
+
+
+
+	public List<Employee> selectSalaryEmp(int salary) {
+		
+		List<Employee> empList = new ArrayList<>();
+		
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, pw);
+			stmt = conn.createStatement();
+			String sql = "SELECT EMP_ID ,EMP_NAME, EMP_NO, EMAIL, PHONE, \r\n"
+					+ "NVL(DEPT_TITLE,'부서없음') DEPT_TITLE, JOB_NAME, SALARY \r\n"
+					+ "FROM EMPLOYEE \r\n"
+					+ "LEFT JOIN DEPARTMENT ON DEPT_CODE = DEPT_ID\r\n"
+					+ "JOIN JOB USING(JOB_CODE)\r\n"
+					+ "WHERE SALARY > " + salary ;
+			
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				int empId = rs.getInt("EMP_ID");
+				String empName = rs.getString("EMP_NAME");
+				String empNo = rs.getString("EMP_NO");
+				String email = rs.getString("EMAIL");
+				String phone = rs.getString("PHONE");
+				String departmentTitle = rs.getString("DEPT_TITLE");
+				String jobName = rs.getString("JOB_NAME");
+//				int salary = rs.getInt("SALARY");
+				
+				Employee emp = new Employee(empId, empName, empNo, email, phone,
+						departmentTitle, jobName, salary);
+				
+				empList.add(emp);
+			}
+			
+			
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+					
+			
+			try {
+				
+				if(rs!= null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn !=null) conn.close();
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return  empList;
 	}
 
 
