@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import edu.kh.emp.model.vo.Employee;
 
@@ -435,6 +435,10 @@ public class EmployeeDAO {
 
 
 
+	/** 5. 사번이 일치하는 사원 정보 삭제
+	 * @param empId
+	 * @return
+	 */
 	public int deleteEmployee(int empId) {
 
 		int result = 0;
@@ -475,6 +479,10 @@ public class EmployeeDAO {
 
 
 
+	/** 6. 입력받은 부서와 일치하는 모든 사원 정보 조회
+	 * @param dept
+	 * @return
+	 */
 	public List<Employee> selectDeptEmp(String dept) {
 		
 		List <Employee> empList = new ArrayList<>();
@@ -488,7 +496,7 @@ public class EmployeeDAO {
 					+ "FROM EMPLOYEE \r\n"
 					+ "LEFT JOIN DEPARTMENT ON DEPT_CODE = DEPT_ID\r\n"
 					+ "JOIN JOB USING(JOB_CODE) \r\n"
-					+ "WHERE DEPT_CODE = '"+dept+"'";
+					+ "WHERE DEPT_TITLE = '"+dept+"'";
 					
 					
 			
@@ -536,6 +544,10 @@ public class EmployeeDAO {
 
 
 
+	/** 7. 입력받은 급여 이상을 받는 모든 사원 정보 조회
+	 * @param salary
+	 * @return
+	 */
 	public List<Employee> selectSalaryEmp(int salary) {
 		
 		List<Employee> empList = new ArrayList<>();
@@ -592,8 +604,117 @@ public class EmployeeDAO {
 		return  empList;
 	}
 
+	/** 8. 부서별 급여 합 전체 조회
+	 * @return
+	 */
+	public HashMap<String, Integer> selectDeptTotalSalary() {
+
+		HashMap<String, Integer> map = new HashMap<>();
+		
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, pw);
+			stmt = conn.createStatement();
+			
+			String sql = "SELECT DEPT_TITLE, SUM(SALARY) TOTAL"
+					+ " FROM EMPLOYEE "
+					+ " JOIN DEPARTMENT ON DEPT_CODE = DEPT_ID"
+					+ " GROUP BY DEPT_TITLE ";
+			
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				String deptName = rs.getString("DEPT_TITLE");
+				int total = rs.getInt("TOTAL");
+				
+				map.put(deptName, total);
+				
+				
+			}
+			
+			
+		} catch(Exception e	) {
+			e.printStackTrace();
+			
+			
+		}finally {
+			
+			
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				
+			}
+		}
+		
+		
+		
+		return map;
+	}
 
 
+
+
+
+	/** 10. 직급별 급여 평균 조회
+	 * @return
+	 */
+	public HashMap<String, Integer> selectJobavgSalary() {
+		HashMap<String, Integer> map = new HashMap<>();
+		
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, pw);
+			
+			String sql = "SELECT JOB_NAME, AVG(SALARY) AVERAGE\r\n"
+					+ "FROM EMPLOYEE \r\n"
+					+ "LEFT JOIN DEPARTMENT ON DEPT_CODE = DEPT_ID\r\n"
+					+ "JOIN JOB USING(JOB_CODE)\r\n"
+					+ "GROUP BY JOB_NAME";
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				String jobName = rs.getString("JOB_NAME");
+				int average =  rs.getInt("AVERAGE");
+				
+				map.put(jobName, average);
+			}
+			
+			
+			
+			
+		} catch (Exception e	) {
+			e.printStackTrace();
+			
+			
+		}finally {
+			
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null)stmt.close();
+				if(conn != null) conn.close();
+				
+				
+				
+			}catch(Exception e	) {
+				e.printStackTrace();
+			}
+		}
+		
+		return map;
+	}
+
+
+
+	
 	
 
 

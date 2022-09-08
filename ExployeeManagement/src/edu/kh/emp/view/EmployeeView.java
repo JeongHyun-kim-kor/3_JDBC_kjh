@@ -1,5 +1,6 @@
 package edu.kh.emp.view;
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -65,7 +66,7 @@ public class EmployeeView {
 				case 5: deleteEmployee(); break;
 				case 6: selectDeptEmp(); break;
 				case 7: selectSalaryEmp(); break;
-//				case 8: selectDeptTotalSalary(); break; 
+				case 8: selectDeptTotalSalary(); break; 
 				case 9: selectEmpNo(); break;
 				case 10: selectJobAvgSalary(); break;
 				case 0: System.out.println("프로그램을 종료합니다 ... "); break;
@@ -360,17 +361,30 @@ public class EmployeeView {
 				
 				System.out.println("<부서별 급여 합 전체 조회>");
 				
+				HashMap<String, Integer> map = new HashMap<>();
+				
+				map = dao.selectDeptTotalSalary();
+				for(String key : map.keySet()) {
+					Object value = map.get(key);
+					System.out.println(key + " : " + value + "원");
+				}
 				
 			}
 
 			/**
 			 *  10. 직급별 급여 평균 조회
+			 *  // DB 조회 결과를 HashMap<String, Double>에 옮겨 담아서 반환 
+            	// 직급명, 급여 평균 조회
 			 */
 			public void selectJobAvgSalary() {
 				
 				System.out.println("< 직급별 급여 평균 조회>");
 				
+				HashMap<String, Integer> map1 = new HashMap<>();
+						
+				map1 = dao.selectJobavgSalary();
 				
+				System.out.println(map1);
 				
 				
 			}
