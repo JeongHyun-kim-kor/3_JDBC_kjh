@@ -104,7 +104,8 @@ public class EmployeeView {
 		// DB에서 전체 사원 정보를 조회하여 List<Employee>형태로 반환하는
 		// dao.selectAll() 메서드 호출
 		List<Employee> empList = dao.selectAll();
-								// return된 empList 반환
+						
+		// return된 empList 반환
 		printAll(empList);
 	}
 	
