@@ -40,6 +40,8 @@ public class DAO {
 			
 			while(rs.next()) {
 				
+				String empId = rs.getString("EMP_NAME");
+				
 				
 				
 			}
