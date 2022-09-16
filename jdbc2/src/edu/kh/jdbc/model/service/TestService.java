@@ -3,13 +3,14 @@ package edu.kh.jdbc.model.service;
 // import static 구문
 // -> static이 붙은 필드, 클래스, 메서들을 호출할 때
 //    클래스명을 생략할 수 있게 하는 구문
-
-import static edu.kh.jdbc.common.JDBCTemplate.*;
+import static edu.kh.jdbc.common.JDBCTemplate.close;
+import static edu.kh.jdbc.common.JDBCTemplate.commit;
+import static edu.kh.jdbc.common.JDBCTemplate.getConnetcion;
+import static edu.kh.jdbc.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import edu.kh.jdbc.common.JDBCTemplate;
 import edu.kh.jdbc.model.vo.TestDAO;
 import edu.kh.jdbc.model.vo.TestVO;
 
@@ -30,6 +31,8 @@ public class TestService {
 
 	private TestDAO dao= new TestDAO();
 	
+	
+
 	/** 1행 삽입 서비스
 	 * @param vo1
 	 * @return result
@@ -63,9 +66,16 @@ public class TestService {
 	 * @param vo2
 	 * @param vo3
 	 * @return
+	 * @throws Exception 
 	 */
-	public int insert(TestVO vo1, TestVO vo2, TestVO vo3)  {
-
+	public int insert(TestVO vo1, TestVO vo2, TestVO vo3) throws Exception  {
+		// throws Exception
+		// -> 아래 catch문에서 강제 발생된 예외를
+		// 호출부로 던진다는 구문
+		
+		// 왜 예외를 강제 발생 시켰는가?
+		// -> Run에서 예외 상황에 대한 다른 결과를 출력하기 위해서
+			
 		//1. Connection 생성 (무조건 1번!)
 		Connection conn = getConnetcion(); // import static 해놨기때문에 J
 		// JDBCTemplate.getConnection(); 안써도 됨
@@ -99,10 +109,12 @@ public class TestService {
 			// --> 실패된 데이터를 DB에 삽입하지 않음
 			// -> DB에는 성공된 데이터만 저장이 된다.
 			// == DB에 저장된 데이터의 신뢰도가 상승한다.
-			
-			
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+			// Run2클래스로 예외를 전달할 수 있도록 예외 강제 발생
+			throw new Exception("DAO 수행 중 예외 발생");
+			
+			
 		} finally { // 무조건 conn 반환하기
 			close(conn);
 		}
@@ -113,4 +125,50 @@ public class TestService {
 	}
 
 	
+
+	/** 번호, 제목, 내용을 입력 받아 번호가 일치하는 행의 제목, 내용 수정
+	 * @param num
+	 * @param content1
+	 * @param content2
+	 * @return
+	 * @throws SQLException 
+	 */
+	 
+//	public int update(TestVO vo1, int num, String content1, String content2) throws SQLException {
+	public int update(TestVO vo1) throws SQLException {	
+	Connection conn =  getConnetcion();
+		
+//		int result = 0;
+		int result = dao.update(conn, vo1);
+		
+		if(result >0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+			
+			
+//		try {
+//			int result1 = dao.update(conn,vo1, num,content1, content2);
+//			
+//			if (result1 == 1) {
+//				commit(conn);
+//				result = 1;
+//			} else {
+//				rollback(conn);
+//				
+//			}
+//			
+//		}finally{
+//			close(conn);
+//		}
+//		
+//		return result;
+//	}
+
+	
+
+	
+	
+	}
 }
