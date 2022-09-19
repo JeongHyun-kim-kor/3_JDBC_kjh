@@ -28,6 +28,16 @@ public class Member {
 	}
 
 
+	public Member(int memberNo, String memberId, String memberName, String memberGender, String enrollDate) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberGender = memberGender;
+		this.enrollDate = enrollDate;
+	}
+
+
 	public int getMemberNo() {
 		return memberNo;
 	}

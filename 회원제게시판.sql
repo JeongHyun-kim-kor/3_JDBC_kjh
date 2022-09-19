@@ -67,7 +67,7 @@ COMMIT;
 
 -- 아이디 중복 확인
 -- (중복되는 아이디가 입력되어도 탈퇴한 계정이라면 중복 X)
-SELECT count(*) FROM "MEMBER"
+SELECT COUNT(*) FROM "MEMBER"
 WHERE MEMBER_ID = 'user01'
 AND SECESSION_FL = 'N';
 -- > ID가 user01이면서 탈퇴하 지 않은 회원조회
@@ -75,7 +75,13 @@ AND SECESSION_FL = 'N';
 -- 중복이면 1, 아니면 0 조회
 
 
-
+-- 로그인
+SELECT MEMBER_NO, MEMBER_ID, MEMBER_NM, MEMBER_GENDER,
+	TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS' ) ENROLL_DATE
+FROM "MEMBER"
+WHERE MEMBER_ID = 'user01'
+AND MEMBER_PW = 'pass01'
+AND SECESSION_FL = 'N';
 
 
 

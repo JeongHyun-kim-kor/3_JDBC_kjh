@@ -195,8 +195,9 @@ public class MainView {
 }
 	/**
 	 *  로그인 화면
+	 * @throws Exception 
 	 */
-	private void login() {
+	private void login(){
 		System.out.println("[로그인]");
 		
 			System.out.println("아이디 : ");
@@ -204,5 +205,42 @@ public class MainView {
 			
 			System.out.println("비밀번호 : ");
 			String memberPw= sc.next();
+	
+
+	// 로그인 서비스 호출 후 조회 결과를 loginMember에 저장
+	try {
+		loginMember = service.login(memberId, memberPw);
+		System.out.println();
+		if(loginMember != null) { // 로그인 성공시
+			System.out.println(loginMember.getMemberName() + "님 환영합니다.");
+		}else {
+			System.out.println("[아이디 또는 비밀번호가 일치하지 않습니다.]");
+			
+		}
+		System.out.println();
+	}catch(Exception e	) {
+		System.out.println("\n<<<로그인 중 예외 발생>>>");
 	}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
