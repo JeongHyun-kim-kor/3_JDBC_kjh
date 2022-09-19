@@ -2,7 +2,6 @@ package edu.kh.jdbc.main.model.service;
 
 import java.sql.Connection;
 
-import edu.kh.jdbc.common.JDBCTemplate;
 import static edu.kh.jdbc.common.JDBCTemplate.*;
 import edu.kh.jdbc.main.model.dao.MainDAO;
 import edu.kh.jdbc.member.vo.Member;
