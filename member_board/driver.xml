@@ -11,9 +11,9 @@
 	
 	<entry key="url">jdbc:oracle:thin:@localhost:1521:XE</entry>
 	
-	<entry key="user">kh_kjh</entry>
+	<entry key="user">member_kjh</entry>
 	
-	<entry key="password">kh1234</entry>
+	<entry key="password">member1234</entry>
 	
 </properties>
 	
