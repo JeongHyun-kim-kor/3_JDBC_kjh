@@ -94,8 +94,16 @@ FROM "MEMBER"
 WHERE SECESSION_FL ='N'
 ORDER BY MEMBER_NO DESC;
 
+-- 회원 정보 수정(이름, 성별)
+UPDATE "MEMBER" SET
+MEMBER_NM = '바꾼이름', -- 입력값
+MEMBER_GENDER  = 'F'  -- 입력값
+WHERE MEMBER_NO = 1;    -- loginMember.getMemberNo(); 이용해야함
 
 
+SELECT * FROM "MEMBER" ;
+
+ROLLBACK; -- 잘 바꼈으면 다시 ROLLBACK하기
 
 
 

@@ -58,7 +58,9 @@ public class MemberView {
 			    case 1 : selectMyInfo(); break;
 //				0920 2교시 1...
 			    case 2 : selectAll(); break;
-			    case 3 : break;
+			    
+//			    0920 3교시 1.. > SQL작성 > 2.. 
+			    case 3 : updateMember();  break;
 			    case 4 : break;
 			    case 5 : break;
 			    case 0 : System.out.println("[메인 메뉴로 이동합니다.]"); break;
@@ -77,6 +79,8 @@ public class MemberView {
 
 //	0920 1교시 6..
 	
+	
+
 	/**
 	 * 내 정보 조회
 	 */
@@ -113,10 +117,12 @@ public class MemberView {
 			// 조회 결과가 있으면 모두 출력
 			// 없으면 "조회 결과가 없습니다." 출력
 			if(memberList.isEmpty()) {
-				System.out.println("조회 결과가 없습니다.");
+				System.out.println("[조회 결과가 없습니다.]");
 			}else {
+//				System.out.println("   아이디   ");
+				
 				for(Member mem : memberList) {
-					System.out.printf("아이디 : %s 유저 이름 : %s 성별 : %s",
+					System.out.printf("아이디 : %s / 유저 이름 : %s / 성별 : %s",
 					mem.getMemberId(),mem.getMemberName(),mem.getMemberGender());
 					System.out.println();
 //					System.out.println( mem.getMemberId());
@@ -132,6 +138,67 @@ public class MemberView {
 		
 		
 	}
-
+	//0920 3교시 2.... 
+	private void updateMember() {
+		try {
+		System.out.println("\n[회원 정보 수정]\n");
 		
+		System.out.print("변경할 이름 : ");
+		String memberName= sc.next();
+		
+		String memberGender = null;
+		while(true) {
+		System.out.print("변경할 성별(M/F) : ");
+		
+		memberGender = sc.next().toUpperCase();
+		
+		if(memberGender.equals("M") || memberGender.equals("F")) {
+			break;
+		} else {
+			System.out.println("M 또는 F만 입력해주세요");
+		}
+		
+		}
+		// 서비스 로 전달할 Member 객체 생성
+		Member member = new Member();
+		member.setMemberNo(loginMember.getMemberNo());
+		member.setMemberName(memberName);
+		member.setMemberGender(memberGender);
+		
+		// 회원 정보 수정 서비스 메서드 호출 후 결과 반환 받기
+		int result = service.updateMember(member);
+		
+		if(result > 0) {
+			//0920 3교시 4.... (2)
+			// loginMember에 저장된 값과
+			// DB에 수정된 값을 동기화하는작업이 필욯요하다!!
+			loginMember.setMemberName(memberName);
+			loginMember.setMemberGender(memberGender);
+			
+			
+			
+			System.out.println("[\n[회원 정보가 수정되엇씁니다.]\n");
+			
+		} else {
+			System.out.println("[수정 실패!]");
+		}
+		
+	} catch(Exception e) {
+		System.out.println("\n<<회원 목록 조회 중 예외 발생>>\n");
+		e.printStackTrace();
+	}
+		
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

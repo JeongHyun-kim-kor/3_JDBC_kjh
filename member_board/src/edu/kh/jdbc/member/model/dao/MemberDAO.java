@@ -58,8 +58,12 @@ public class MemberDAO {
 				String memberNm = rs.getString("MEMBER_NM");
 				String memberGender = rs.getString("MEMBER_GENDER");
 				
-				Member mem = new Member(memberId, memberNm, memberGender);
-				resultList.add(mem);
+				Member member = new Member(); // >> 매개변수생성자 만들필요없다. 밑에처럼
+				member.setMemberId(memberId);
+				member.setMemberName(memberNm);
+				member.setMemberGender(memberGender);
+//				Member mem = new Member(memberId, memberNm, memberGender);
+				resultList.add(member);
 				// 생성자를 따로 만들었지만 다른 방법이 있다? 
 			}
 			
@@ -70,9 +74,63 @@ public class MemberDAO {
 			close(stmt);
 		}
 		
+		//0920 3교시 4.... 
+
 		// 조회 결과를 옮겨 담은 List 반환
 		return resultList; //> memberList로 들어가나?
 	}
+	/**
+	 * @param conn
+	 * @param member
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateMember(Connection conn, Member member) throws Exception {
+		
+		// 결과 수정용 변수 생성
+		int result = 0; // UPDATE 바녕 결과 행의 개수(정수형)을 저장하기 위한 변수
+		
+		try {
+			// SQL 얻어오기
+			String sql = prop.getProperty("updateMember");
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 알맞은 값 대입
+			pstmt.setString(1, member.getMemberName());
+			pstmt.setString(2,  member.getMemberGender());
+			pstmt.setInt(3,  member.getMemberNo());
+			
+			// SQL 수행 후 결과 반환 받기
+			result = pstmt.executeUpdate();
+		} finally {
+			
+			//JDBC객체 자원 반환
+			close(pstmt);
+		}
+		
+		
+		// 수정 결과 반환
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
