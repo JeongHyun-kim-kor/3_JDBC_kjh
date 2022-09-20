@@ -83,6 +83,37 @@ WHERE MEMBER_ID = 'user01'
 AND MEMBER_PW = 'pass01'
 AND SECESSION_FL = 'N';
 
+-- 0920 2교시 2... dbeaver에서 SQL문 작성
+-- 회원 목록 조회(아이디,이름, 성별)
+-- 탈퇴 회원 미포함
+-- 가입일 내림차순
+--> MEMBER_NO 내림차순(나중에 가입한 회원의 번호가 더 큼)
+-- ? 필요없음 > PREPAREDSTATEMENT 대신 STATEMENT 쓰면된다
+SELECT MEMBER_ID, MEMBER_NM, MEMBER_GENDER
+FROM "MEMBER" 
+WHERE SECESSION_FL ='N'
+ORDER BY MEMBER_NO DESC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 package edu.kh.jdbc.member.view;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import edu.kh.jdbc.member.model.service.MemberService;
@@ -55,7 +56,8 @@ public class MemberView {
 			    //	0920 1교시 5..
 
 			    case 1 : selectMyInfo(); break;
-			    case 2 : break;
+//				0920 2교시 1...
+			    case 2 : selectAll(); break;
 			    case 3 : break;
 			    case 4 : break;
 			    case 5 : break;
@@ -92,6 +94,44 @@ public class MemberView {
 		}
 		System.out.println("가입일 : " + loginMember.getEnrollDate());
 	}
-	
+	//	0920 2교시 1...
+	/**
+	 * 회원 목록 조회
+	 */
+	private void selectAll() {
+		System.out.println("\n[회원 목록 조회]\n");
+		
+		//DB에서 회원 목록 조회(탈퇴 회원 미포함)
+		// + 가입일 내림차순
+		
+		try {
+//			0920 2교시 2... dbeaver에서 SQL문 작성
+			// 3..
+			// 회원목록 조회 서비스 호출 후 결과 반환 받기
+			List<Member> memberList = service.selectAll();
+			
+			// 조회 결과가 있으면 모두 출력
+			// 없으면 "조회 결과가 없습니다." 출력
+			if(memberList.isEmpty()) {
+				System.out.println("조회 결과가 없습니다.");
+			}else {
+				for(Member mem : memberList) {
+					System.out.printf("아이디 : %s 유저 이름 : %s 성별 : %s",
+					mem.getMemberId(),mem.getMemberName(),mem.getMemberGender());
+					System.out.println();
+//					System.out.println( mem.getMemberId());
+//					System.out.println( mem.getMemberName());
+//					System.out.println(  mem.getMemberGender());
+				}
+			}
+			
+		} catch(Exception e) {
+			System.out.println("\n<<회원 목록 조회 중 예외 발생>>\n");
+			e.printStackTrace();
+		}
+		
+		
+	}
+
 		
 }

@@ -18,6 +18,16 @@ public class Member {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
+	public Member(String memberId, String memberName, String memberGender) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberGender = memberGender;
+	}
+
+
 
 	public Member(String memberId, String memberPw, String memberName, String memberGender) {
 		super();

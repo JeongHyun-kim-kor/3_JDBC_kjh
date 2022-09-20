@@ -3,6 +3,12 @@
 <properties>
 <comment>member-query.xml file</comment>
 
+	<entry key="selectAll">
+		SELECT MEMBER_ID, MEMBER_NM, MEMBER_GENDER
+		FROM "MEMBER" 
+		WHERE SECESSION_FL ='N'
+		ORDER BY MEMBER_NO DESC
+	</entry>
 
 
 </properties>
