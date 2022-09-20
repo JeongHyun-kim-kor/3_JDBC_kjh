@@ -105,13 +105,24 @@ SELECT * FROM "MEMBER" ;
 
 ROLLBACK; -- 잘 바꼈으면 다시 ROLLBACK하기
 
+-- 비밀 번호 변경
+UPDATE "MEMBER" SET
+MEMBEW_PW = '새비밀번호'
+WHERE MEMBER_NO = 1 
+AND MEMBER_PW = '현재비밀번호'; -- 특정 회원의 현재 비밀번호가 일치할때 변경
 
 
+UPDATE "MEMBER" SET
+MEMBER_PW = '새비밀번호' > ? 
+WHERE MEMBER_NO = 1   > ?
+AND MEMBER_PW = '현재비밀번호';
 
 
-
-
-
+-- 회원탈퇴(SECESSION_FL 컬럼의 값을 'Y로 변경)
+UPDATE "MEMBER" SET
+SECESSION_FL ='Y'
+WHERE MEMBER_NO = ?
+AND MEMBER_PW = ?;
 
 
 

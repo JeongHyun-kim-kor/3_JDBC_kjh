@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import edu.kh.jdbc.main.view.MainView;
 import edu.kh.jdbc.member.model.service.MemberService;
 import edu.kh.jdbc.member.vo.Member;
 
@@ -24,6 +25,8 @@ public class MemberView {
 	// 로그인 회원 정보 저장용 변수
 	private Member loginMember =null;
 	
+	// 메뉴 번호를 입력 받기 위한 변수
+	private int input = -1;	
 	/**
 	 * 회원 기능 메뉴
 	 */
@@ -32,7 +35,7 @@ public class MemberView {
 	 */
 	public void memberMenu(Member loginMember) {
 										//		0920 1교시 5..
-		int input = -1;					// 위에 loginMember에다가 필드로 넘겨서(복사) 
+						// 위에 loginMember에다가 필드로 넘겨서(복사) 
 										// 전체에서 쓸수잇게!!
 									// 전달 받은 로그인 회원 정보를 필드에 저장
 										this.loginMember = loginMember;
@@ -61,8 +64,11 @@ public class MemberView {
 			    
 //			    0920 3교시 1.. > SQL작성 > 2.. 
 			    case 3 : updateMember();  break;
-			    case 4 : break;
-			    case 5 : break;
+//			    0920 4교시 1..
+			    case 4 : updatePw(); break;
+//			    0920 4교시 (2) 1..
+
+			    case 5 : secession(); break;
 			    case 0 : System.out.println("[메인 메뉴로 이동합니다.]"); break;
 			    default:  System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 			    }
@@ -77,8 +83,11 @@ public class MemberView {
 		}while(input != 0);
 	}
 
+
 //	0920 1교시 6..
 	
+	
+
 	
 
 	/**
@@ -191,8 +200,100 @@ public class MemberView {
 }
 	
 	
-	
-	
+	/** 
+	 * 비밀번호 변경
+	 */
+	private void updatePw() {
+		System.out.println("\n[비밀번호 변경]\n");
+		
+		try {
+			System.out.print("현재 비밀번호 : ");
+			String currentPw = sc.next();
+			
+			String newPw1 = null;
+			String newPw2 = null;
+			
+			while(true) {
+				System.out.print("새 비밀번호 : ");
+				newPw1 = sc.next();
+				
+				System.out.print("새 비밀번호 확인 : ");
+				newPw2 = sc.next();
+				
+				if(newPw1.equals(newPw2)) {
+					break;
+				} else {
+					System.out.println("새 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+				}
+			} // while 끝
+			
+			// 서비스 호출 후 결과 반환 받기
+			int result = service.updatePw(currentPw, newPw1, loginMember.getMemberNo());
+//											현재비밀, 새로운 pw, 로그인된 회원ㅂ ㅓㄴ호
+			
+			if(result > 0) {
+				System.out.println("\n[비밀번호가 변경되었습니다.]\n");
+			} else {
+				System.out.println("\n[현재 비밀번호가 일치하지 않습ㄴ디ㅏ.]\n");
+			}
+			
+			
+			
+		}catch(Exception e) {
+			System.out.println("\n<<비밀번호 변경 중 예외 발생>>\n");
+			e.printStackTrace();
+		}
+	}
+
+//    0920 4교시 (2) 2
+
+	/**
+	 * 회원 탈퇴
+	 */
+	private void secession() {
+		System.out.println("\n[회원 탈퇴]\n");
+		
+		try {
+			System.out.print("비밀번호 입력 : ");
+			String memberPw = sc.next();
+			
+			while(true) {
+				System.out.print("정말 탈퇴하시겠습니까? (Y/N) : ");
+				char ch = sc.next().toUpperCase().charAt(0);
+				
+				if(ch== 'Y') {
+					// 서비스 호출 후 결과 반환 받기
+					int result = service.secession(memberPw, loginMember.getMemberNo());
+												// 비밀번호, 회원번호, 
+					if(result > 0) {
+						System.out.println("[탈퇴되었습니다...]"); 
+						// 탈퇴하면 로그아웃되고, 메인으로 돌아가고
+						// int input -1 을 멤버로 올린다.
+						
+						input = 0; // 메인 메뉴를 이동
+						// MainView의  private loginMember = null을
+						//public static Member loginMember = null; 로 변경
+						MainView.loginMember = null; // 자동으로 로그아웃
+						
+					} else {
+						System.out.println("[비밀번호가 일치하지 않습니다.]");
+					}
+					break; // while 문 종료
+					
+				}else if(ch == 'N') {
+					System.out.println("[취소되었습니다.]");
+					break;
+				} else {
+					System.out.println("\n[Y 또는 N 을 입력해주세요]\n");
+				}
+			}
+			
+		}catch (Exception e) {
+			System.out.println("회원 탈퇴중 예외 발생");
+			e.printStackTrace();
+		}
+	}
+
 	
 	
 	
