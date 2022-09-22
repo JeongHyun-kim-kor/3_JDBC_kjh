@@ -1,13 +1,15 @@
 package edu.kh.jdbc.board.model.service;
 
-import static edu.kh.jdbc.common.JDBCTemplate.*;
-
+import static edu.kh.jdbc.common.JDBCTemplate.close;
+import static edu.kh.jdbc.common.JDBCTemplate.getConnetcion;
+import static edu.kh.jdbc.common.JDBCTemplate.*
 import java.sql.Connection;
 import java.util.List;
 
 import edu.kh.jdbc.board.model.dao.BoardDAO;
 import edu.kh.jdbc.board.model.dao.CommentDAO;
 import edu.kh.jdbc.board.model.vo.Board;
+import edu.kh.jdbc.board.model.vo.Comment;
 
 public class BoardService {
 
@@ -28,11 +30,53 @@ public class BoardService {
 		// DAO 메서드 호출 후 결과 반환 받기
 		List<Board> boardList = dao.selectAllBoard(conn);
 		
+		
 		close(conn);
 		
 		return boardList;
 		
+	}
+
+	/** 게시글 상세 조회 서비스
+	 * @param boardNo
+	 * @param memberNo
+	 * @return board
+	 * @throws Exception
+	 */
+	public Board selectBoard(int boardNo, int memberNo) throws Exception {
+
+		Connection conn = getConnetcion();
+		
+		// 1. 게시글 상세 조회 DAO 호출
+		Board board = dao.selectAllBoard(conn, boardNo);
+		// -> 조회 결과가 없으면 null, 있으면 null 아님
+		
+		if(board != null) { // 게시글 존재한다면( 상세 조회 성공)
+			// 2. 댓글 목록 조회 DAO 호출
+			List<Comment> commentList = cDao.selectCommentList(conn, boardNo);
+			
+			// 조회된 댓글 목록을 board에 저장
+			board.setCommentList(commentList);
+			
+			// 3. 조회 수 증가
+			// 단, 로그인한 회원과 게시글 작성자가 다를 경우에만 증가
+			if(memberNo != board.getMemberNo()) {
+				int result = dao.increseReadCount(conn, boardNo);
+				
+				if(result > 0) commit(conn);
+				else 		   rollback(conn);
+			}
+			
+		}
+		
+		
+		
+		close(conn);
+		
+		return board;
 	} 
+	
+	
 	
 	
 	

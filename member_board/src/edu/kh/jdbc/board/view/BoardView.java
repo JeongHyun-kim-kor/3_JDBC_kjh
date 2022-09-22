@@ -7,6 +7,7 @@ import java.util.Scanner;
 import edu.kh.jdbc.board.model.service.BoardService;
 import edu.kh.jdbc.board.model.service.CommentService;
 import edu.kh.jdbc.board.model.vo.Board;
+import edu.kh.jdbc.main.view.MainView;
 
 public class BoardView {
 
@@ -41,7 +42,7 @@ public class BoardView {
 				
 				switch(input) {
 				case 1: selectAllBoard(); break; // 게시글 목록 조회
-				case 2: 		break;
+				case 2: selectBoard();		break; // 게시글 상세 조회
 				case 3: 		break;
 				case 4: 		break;
 				case 0: System.out.println("[로그인 메뉴로 이동합니다.]")  ;		break;
@@ -68,6 +69,8 @@ public class BoardView {
 		
 	}
 
+	
+
 	/**
 	 * 게시글 목록 조회
 	 */
@@ -77,9 +80,21 @@ public class BoardView {
 		try {
 			
 			List<Board> boardList = bService.selectAllBoard();
-			
+			// -> DAO에서 new ArrayList<>(); 구문으로 인해 반환되는 조회결과는
+			// null이 될 수 없다.!!
 		
-			
+			if(boardList.isEmpty()) { // 조회 결과가 없을 경우
+				System.out.println("조회된 게시글이 없습니다.");
+				
+			} else {
+				for(Board b : boardList) {
+					
+					// 3 | 샘플 제목3[4] | 유저삼 | 3시간전 | 10
+					System.out.printf("%d | %s[%d] | %s | %s | %d\n",
+						b.getBoardNo(), b.getBoardTitle(), b.getCommentCount(),
+						b.getMemberName(),b.getCreateDate(),b.getReadCount());
+				}
+			}
 			
 			
 		}catch (Exception e) {
@@ -89,7 +104,27 @@ public class BoardView {
 	}
 	
 	
-	
+	/**
+	 * 게시글 상세 조회
+	 */
+	private void selectBoard() {
+		// TODO Auto-generated method stub
+		System.out.println("\n[게시글 상세 조회]\n");
+		
+		try {
+			System.out.print("게시글 번호 입력 : ");
+			int boardNo = sc.nextInt();
+			sc.nextLine();
+			
+			//게시글 상세 조회 서비스 호출 후 결과 반환 받기
+			Board board = bService.selectBoard(boardNo, MainView.loginMember.getMemberNo());
+											//게시글 번호ㅡ              로그인한 회원의 회원번호
+			
+		}catch (Exception e) {
+			System.out.println("\n[게시글 상세 조회 중 예외 발생]\n");
+		}
+		
+	}
 	
 	
 	
