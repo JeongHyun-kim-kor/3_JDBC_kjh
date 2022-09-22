@@ -137,7 +137,7 @@ public class MainDAO {
 			//   컬럼 값을 모두 얻어와
 			//   Member 객체를 생성해서 loginMember 대입
 			
-			if(rs.next())
+			if(rs.next()) {
 			
 				//방법1
 //			loginMember = new Member();
@@ -155,9 +155,9 @@ public class MainDAO {
 									rs.getString("MEMBER_NM"),
 									rs.getString("MEMBER_GENDER"),
 									rs.getString("ENROLL_DATE"));	
-				
+			}
 			
-		} finally {
+		 }finally {
 			
 			// 7. 사용한 JDBC 객체 자원 반환
 			close(rs);
