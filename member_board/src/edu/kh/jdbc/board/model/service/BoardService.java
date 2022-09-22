@@ -2,7 +2,7 @@ package edu.kh.jdbc.board.model.service;
 
 import static edu.kh.jdbc.common.JDBCTemplate.close;
 import static edu.kh.jdbc.common.JDBCTemplate.getConnetcion;
-import static edu.kh.jdbc.common.JDBCTemplate.*
+import static edu.kh.jdbc.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class BoardService {
 		Connection conn = getConnetcion();
 		
 		// 1. 게시글 상세 조회 DAO 호출
-		Board board = dao.selectAllBoard(conn, boardNo);
+		Board board = dao.selectBoard(conn, boardNo);
 		// -> 조회 결과가 없으면 null, 있으면 null 아님
 		
 		if(board != null) { // 게시글 존재한다면( 상세 조회 성공)
@@ -64,8 +64,13 @@ public class BoardService {
 				int result = dao.increseReadCount(conn, boardNo);
 				
 				if(result > 0) commit(conn);
-				else 		   rollback(conn);
+				
+				// 미리 조회된 board의 조회수가
+				// 증가된 DB의 조회수와 동일한 값을  가지도록 동기회
+				board.setReadCount(board.getReadCount() + 1);
 			}
+				else 		   rollback(conn);
+			
 			
 		}
 		

@@ -78,7 +78,6 @@ public class BoardDAO {
 		} finally {
 			close(rs);
 			close(stmt);
-			close(conn);
 		
 			
 		}
@@ -87,5 +86,80 @@ public class BoardDAO {
 		
 		
 		return boardList;
+	}
+
+	/**
+	 * @param conn
+	 * @param boardNo
+	 * @return Board
+	 * @throws Exception
+	 */
+	public Board selectBoard(Connection conn, int boardNo) throws Exception{
+		// 결과 저장용 변수 선언
+		Board board = null;
+		
+		try {
+			String sql = prop.getProperty("selectBoard"); // SQL 얻어오기
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNo); // ? 에 알맞은 값 대입
+			
+			rs = pstmt.executeQuery(); // SQL(Select) 수행 후 결과 반환받기
+			
+			if(rs.next()) {
+				board = new Board();
+				
+			board.setBoardNo		(rs.getInt("BOARD_NO"));
+			board.setBoardTitle		(rs.getString("BOARD_TITLE"));
+			board.setBoardContent	(rs.getString("BOARD_CONTENT"));
+			board.setMemberNo		(rs.getInt("MEMBER_NO"));
+			board.setMemberName		(rs.getString("MEMBER_NM"));
+			board.setReadCount		(rs.getInt("READ_COUNT"));
+			board.setCreateDate		(rs.getString("CREATE_DT"));
+				
+//				BOARD_NO, BOARD_TITLE, BOARD_CONTENT,
+//				MEMBER_NO, MEMBER_NM, READ_COUNT,
+//				TO_CHAR(CREATE_DT, 'YYYY-MM-DD HH24:MI:SS') CREATE_DT
+				
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+			
+		}
+		
+		
+		
+		return board;
+	}
+
+	/** 조회 수 증가 DAO
+	 * @param conn
+	 * @param boardNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int increseReadCount(Connection conn, int boardNo) throws Exception {
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("increaseReadCount");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return result;
 	}
 }
