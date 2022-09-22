@@ -1,12 +1,12 @@
 package edu.kh.jdbc.board.view;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
-
-import javax.swing.InputMap;
 
 import edu.kh.jdbc.board.model.service.BoardService;
 import edu.kh.jdbc.board.model.service.CommentService;
+import edu.kh.jdbc.board.model.vo.Board;
 
 public class BoardView {
 
@@ -40,7 +40,7 @@ public class BoardView {
 				System.out.println();
 				
 				switch(input) {
-				case 1: 		break;
+				case 1: selectAllBoard(); break; // 게시글 목록 조회
 				case 2: 		break;
 				case 3: 		break;
 				case 4: 		break;
@@ -66,6 +66,26 @@ public class BoardView {
 		
 		
 		
+	}
+
+	/**
+	 * 게시글 목록 조회
+	 */
+	private void selectAllBoard() {
+		System.out.println("\n[게시글 목록 조회]\n");
+		
+		try {
+			
+			List<Board> boardList = bService.selectAllBoard();
+			
+		
+			
+			
+			
+		}catch (Exception e) {
+			System.out.println("\n<게시글 목록 조회 중 예외 발생>\n");
+			e.printStackTrace();
+		}
 	}
 	
 	

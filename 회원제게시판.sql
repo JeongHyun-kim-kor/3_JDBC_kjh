@@ -263,7 +263,7 @@ SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT,
 FROM "BOARD"
 JOIN "MEMBER" USING(MEMBER_NO)
 WHERE DELETE_FL = 'N'
-AND BOARD_NO =1 ;
+AND BOARD_NO = 3 ;
 
 -- 특정 게시글의 댓글 목록 조회(작성일 오름차순)
 SELECT COMMENT_NO, COMMENT_CONTENT, 
@@ -276,7 +276,16 @@ AND BOARD_NO = 3
 ORDER BY COMMENT_NO;
 
 
+-- 0922 4교시
 
+-- 상세 조회된 게시글의 조회 수 증가
+UPDATE "BOARD" SET 
+READ_COUNT = READ_COUNT + 1
+WHERE BOARD_NO = 3;
+
+COMMIT;
+
+-- 한번에 게시글 상세조회, 댓글 목록조회, 조회수 증가 , 3개 SQL 사용
 
 
 
