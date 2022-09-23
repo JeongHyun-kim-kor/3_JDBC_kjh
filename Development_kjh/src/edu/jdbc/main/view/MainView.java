@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import edu.jdbc.main.model.service.MainService;
+import edu.jdbc.manager.view.ManagerView;
 import edu.jdbc.manager.vo.Manager;
 import edu.jdbc.member.view.MemberView;
 import edu.jdbc.member.vo.Member;
@@ -19,7 +20,7 @@ public class MainView {
 	
 	
 	public static Manager loginManager = null;
-	
+	public static ManagerView managerView = new ManagerView();
 	
 	public void mainMenu() {
 		
@@ -46,7 +47,7 @@ public class MainView {
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 				}
 				}else if(loginMember != null){
-					System.out.println("==== 사용자 메뉴 ====");
+					System.out.println("==== 사용자 로그인 메뉴 ====");
 					System.out.println("1. 회원 기능");
 					System.out.println("0. 로그아웃");
 					
@@ -64,10 +65,18 @@ public class MainView {
 					
 					
 					
-				System.out.println();
 				} else if(loginManager != null) {
-					System.out.println("==== 괸리자 메뉴 ====");
-					System.out.println("");
+					System.out.println("==== 관리자 로그인 메뉴 ====");
+					System.out.println("1. 상품 확인");
+					
+					System.out.print("\n 메뉴 선택 : ");
+					int mInput = sc.nextInt();
+					System.out.println();
+					
+					switch(mInput) {
+					
+					case 1 : managerView.checkProduct(); break;
+					}
 				}
 			
 				} catch(InputMismatchException e) {
@@ -82,6 +91,9 @@ public class MainView {
 	}
 
 	
+
+	
+
 
 	private void login() {
 		System.out.println("[회원 로그인]");
@@ -115,13 +127,20 @@ public class MainView {
 		System.out.println("[관리자 로그인]");
 		
 		System.out.print("아이디 : ");
-		String memberId = sc.next();
+		String managerId = sc.next();
 		
 		System.out.print("비밀번호 : ");
-		String memberPw = sc.next();
+		String managerPw = sc.next();
 		
 		try {
-			loginManager = service.managerLogin(memberId, memberPw);
+			loginManager = service.managerLogin(managerId, managerPw);
+			
+			if(loginManager != null) {
+				System.out.println(loginManager.getManagerName()+"님 환영합니다. 관리하실 메뉴를 선택해주세요.");
+			} else {
+				System.out.println("[아이디 또는 비밀번호가 일치하지 않습니다.]");
+
+			}
 			
 		} catch(Exception e) {
 			System.out.println("<관리자 로그인 중 예외 발생>");
@@ -131,6 +150,7 @@ public class MainView {
 	
 	
 	
+
 	
 	
 	

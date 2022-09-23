@@ -33,15 +33,15 @@ public class MainService {
 
 
 
-	public Manager managerLogin(String memberId, String memberPw)throws Exception{
+	public Manager managerLogin(String managerId, String managerPw)throws Exception{
 
 		Connection conn = getConnetcion();
 		
-		Manager loginManager = dao.managerLogin(conn, memberId, memberPw);
+		Manager loginManager = dao.managerLogin(conn, managerId, managerPw);
 		
 		close(conn);
 		
-		return null;
+		return loginManager;
 	}
 	
 	 

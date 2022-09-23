@@ -98,6 +98,22 @@ public class BoardService {
 		
 		
 		return result;
+	}
+
+	public int deleteBoard(int boardNo) throws Exception {
+		
+		Connection conn = getConnetcion();
+		
+		int result = dao.deleteBoard(conn,boardNo);
+		
+
+		if(result > 0) commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		
+		return result;
 	} 
 	
 	

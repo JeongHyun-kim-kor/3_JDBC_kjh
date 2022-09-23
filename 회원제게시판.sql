@@ -319,14 +319,20 @@ BOARD_CONTENT ?
 WHERE BOARD_NO = ?;
 
 
+-- 게시글 삭제
+
+UPDATE "BOARD" SET
+DELETE_FL = 'Y'
+WHERE BOARD_NO =?;
 
 
 
 
+SELECT * FROM "BOARD";
 
+COMMIT;
 
-
-
+SELECT * FROM "COMMENT" ;
 
 
 

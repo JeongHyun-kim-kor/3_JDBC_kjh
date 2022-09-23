@@ -63,7 +63,7 @@ public class MainDAO {
 		return loginMember;
 	}
 
-	public Manager managerLogin(Connection conn, String memberId, String memberPw) throws Exception {
+	public Manager managerLogin(Connection conn, String managerId, String managerPw) throws Exception {
 
 		Manager loginManager = null;
 		
@@ -72,14 +72,14 @@ public class MainDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, memberId);
-			pstmt.setString(2, memberPw);
+			pstmt.setString(1, managerId);
+			pstmt.setString(2, managerPw);
 			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				loginManager = new Manager(rs.getInt("MANAGER_NO"),
-										memberId,
+										managerId,
 										rs.getString("MANAGER_NAME"),
 										rs.getString("MANAGER_GENDER"),
 										rs.getString("ENROLL_DATE"));	

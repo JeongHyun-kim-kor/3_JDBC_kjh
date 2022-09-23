@@ -203,8 +203,9 @@ public class BoardView {
 					
 					if(input == 5) {
 						// 게시글 삭제 호출
-//						deleteBoard(board.getBoardNo());
+						deleteBoard(board.getBoardNo());
 
+						// input = 0 >>  밑에 input > 0 && input < 5의 두번째 방법
 					}
 					
 					break; // switch 문 종료
@@ -219,7 +220,7 @@ public class BoardView {
 			
 			// 댓글 등록, 수정 , 삭제 선택 시
 			// 각각의 서비스 메서드 종료 후 다시 서브메뉴 메서드 호출
-		if(input >0) {
+		if(input >0 && input < 5) {
 		
 		try {
             board = bService.selectBoard(board.getBoardNo(), 						MainView.loginMember.getMemberNo());
@@ -528,6 +529,39 @@ public class BoardView {
 		
 	}
 	
+	private void deleteBoard(int boardNo) {
+		try {
+			System.out.println("\n[게시글 삭제]\n");
+			
+			System.out.print("정말 삭제 하시겠습니가? (Y/N) : ");
+			char ch = sc.next().toLowerCase().charAt(0); // 소문자로 변환하여 첫 글자
+			
+			
+			if(ch == 'y') {
+				
+				// 삭제 서비스 호출
+				int result = bService.deleteBoard(boardNo);
+				
+				if(result >0 ) {
+					System.out.println("\n[게시글 삭제 성공]\n");
+				} else {
+				
+					System.out.println("\n[게시글 삭제 실패]\n");
+				}
+				
+			}else {
+				System.out.println("\n[삭제 취소]\n");
+			
+			
+			}
+			
+			
+		}catch(Exception e) {
+			System.out.println("\n<<게시글 삭제 중 예외 발생>>\n");
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	
