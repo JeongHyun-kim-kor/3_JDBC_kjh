@@ -22,7 +22,7 @@ public class MainView {
 	public static Manager loginManager = null;
 	public static ManagerView managerView = new ManagerView();
 	
-	public void mainMenu() {
+	public void mainMenu(){
 		
 		int input = -1;
 		
@@ -68,14 +68,15 @@ public class MainView {
 				} else if(loginManager != null) {
 					System.out.println("==== 관리자 로그인 메뉴 ====");
 					System.out.println("1. 상품 확인");
-					
+					System.out.println("2. 재고 관리");
 					System.out.print("\n 메뉴 선택 : ");
 					int mInput = sc.nextInt();
 					System.out.println();
 					
 					switch(mInput) {
 					
-					case 1 : managerView.checkProduct(); break;
+					case 1 : managerView.checkProduct(loginManager); break;
+					case 2 : managerView.manageProduct()
 					}
 				}
 			
