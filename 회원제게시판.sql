@@ -296,4 +296,45 @@ COMMIT;
 -- 한번에 게시글 상세조회, 댓글 목록조회, 조회수 증가 , 3개 SQL 사용
 
 
+-- 댓글 등록
+
+INSERT INTO "COMMENT" 
+VALUES(SEQ_COMMENT_NO.NEXTVAL, '댓글 샘플 3번', DEFAULT, DEFAULT,3,3
+);
+
+-- 댓글 수정
+UPDATE "COMMENT" SET
+COMMENT_CONTENT = ?
+WHERE COMMENT_NO  = ?;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
