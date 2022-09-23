@@ -3,6 +3,7 @@ package edu.kh.jdbc.board.model.service;
 import static edu.kh.jdbc.common.JDBCTemplate.commit;
 import static edu.kh.jdbc.common.JDBCTemplate.getConnetcion;
 import static edu.kh.jdbc.common.JDBCTemplate.rollback;
+import static edu.kh.jdbc.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
@@ -47,6 +48,25 @@ public class CommentService {
 		
 		if (result > 0) commit(conn);
 		else 			rollback(conn);
+		
+		return result;
+	}
+
+	/** 댓글 삭제 서비스 -> update(컬럼 하나) 
+	 * @param commentNo
+	 * @return result
+	 * @throws Exception
+	 */// 0923 4교시 2
+	public int delectComment(int commentNo) throws Exception {
+		
+		Connection conn = getConnetcion();
+		
+		int result = dao.delectComment(conn, commentNo);
+		
+		if(result >0) commit(conn);
+		else 		  rollback(conn);
+		
+		close(conn);
 		
 		return result;
 	}

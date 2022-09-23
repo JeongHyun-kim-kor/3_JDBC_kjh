@@ -26,5 +26,11 @@
 	WHERE COMMENT_NO = ?
 </entry>
 
+<entry key="deleteComment">
+	UPDATE "COMMENT" SET
+	DELETE_FL = 'Y'
+	WHERE COMMENT_NO = ?
+</entry>
+
 
 </properties>

@@ -79,6 +79,25 @@ public class BoardService {
 		close(conn);
 		
 		return board;
+	}
+
+	/** 게시글 수정 서비스
+	 * @param board
+	 * @return result
+	 */
+	public int updateBoard(Board board) throws Exception {
+
+		Connection conn = getConnetcion();
+		
+		int result = dao.updateBoard(conn,board);
+		
+		if(result > 0) commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		
+		return result;
 	} 
 	
 	

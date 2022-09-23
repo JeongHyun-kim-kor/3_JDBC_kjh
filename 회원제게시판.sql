@@ -309,10 +309,14 @@ WHERE COMMENT_NO  = ?;
 
 
 
+-- 댓글 삭제
 
 
-
-
+-- 게시글 수정
+UPDATE "BOARD" SET
+BOARD_TITLE = ?,
+BOARD_CONTENT ?
+WHERE BOARD_NO = ?;
 
 
 

@@ -167,6 +167,14 @@ public class BoardView {
 			System.out.println("2) 댓글 수정"); 	//0923 2교시 4. 
 
 			System.out.println("3) 댓글 삭제");	// 0923 3교시 5?
+			
+			// 0923 4교시 4(1)
+			// 로그인한 회원과 게시글 작성자가 같은 경우에만 추가 출력되는 메뉴
+			if(MainView.loginMember.getMemberNo() == board.getMemberNo()) {
+				System.out.println("4) 게시글 수정");
+				System.out.println("5) 게시글 삭제");
+			}
+			
 			System.out.println("0) 게시판 메뉴로 돌아가기");
 			
 			System.out.print("\n 서브 메뉴 선택 : ");
@@ -181,6 +189,27 @@ public class BoardView {
 			case 1: insertComment(board.getBoardNo(), memberNo ); break; // 0923 1교시 2(1).
 			case 2: updateComment(board.getCommentList(), memberNo); break; //0923 2교시 4. 
 			case 3: deleteComment( board.getCommentList(), memberNo); break; // 0923 3교시  5?
+			
+			// 0923 4교시 4(2)
+			case 4: case 5: // 4또는 5 입력시
+				
+				// 4또는 5를 입력한 회원이 게시글 작성자인 경우!
+				if(MainView.loginMember.getMemberNo() == board.getMemberNo()) {
+					
+					if(input == 4) {
+						// 게시글 수정 호출
+						updateBoard(board.getBoardNo());
+					}
+					
+					if(input == 5) {
+						// 게시글 삭제 호출
+//						deleteBoard(board.getBoardNo());
+
+					}
+					
+					break; // switch 문 종료
+				}
+			
 			case 0: System.out.println("\n[게시판 메뉴로 돌아갑니다...]\n"); break;
 			
 			default : System.out.println("\n[메뉴에 작성된 번호만 입력해주세요.]\n");
@@ -190,7 +219,7 @@ public class BoardView {
 			
 			// 댓글 등록, 수정 , 삭제 선택 시
 			// 각각의 서비스 메서드 종료 후 다시 서브메뉴 메서드 호출
-	if(input >0) {
+		if(input >0) {
 		
 		try {
             board = bService.selectBoard(board.getBoardNo(), 						MainView.loginMember.getMemberNo());
@@ -234,11 +263,6 @@ public class BoardView {
 
 
 	// 0923 1교시 2(3).
-
-	
-
-
-
 	/** 댓글 등록
 	 * @param boardNo
 	 * @param memberNo
@@ -420,13 +444,28 @@ public class BoardView {
 					
 					if(c.getMemberNo() == memberNo) { // 회원 번호 일치
 						
+						// 0923 4교시 1
 						// 정말 삭제?  < if문 >
 						// y인 경우 댓글 삭제 서비스 호출
+						System.out.print("정말 삭제 하시겠습니까? (Y/N) : ");
+						char ch = sc.next().toUpperCase().charAt(0);
+						
+						if(ch == 'Y') {
+							int result = cService.delectComment(commentNo);
+							
+							if(result > 0) {
+								System.out.println("\n[댓글 삭제 성공]\n");
+							} else {
+								System.out.println("\n[댓글 삭제 실패...]\n");
+								
+							}
+							
+						} else {
+							System.out.println("\n[취소 되었습니다.]\n");
+							
+						}
 						
 						
-						
-						// 삭제할 댓글 내용 입력 받기
-						String content = inputContent();
 						
 						
 						
@@ -450,7 +489,44 @@ public class BoardView {
 		
 	}
 	
-	
+	/** 게시글 수정
+	 * @param boardNo
+	 */
+	private void updateBoard(int boardNo) {
+
+		try {
+			System.out.println("\n[게시글 수정]\n");
+			
+			System.out.print("수정할 제목 : ");
+			String boardTitle = sc.nextLine();
+			
+			System.out.println();
+			
+			System.out.println("수정할 내용 : ");
+			String boardContent = inputContent();
+			
+			// 수정되 제목/내용 + 게시글 번호를 한번에 전달하기 위한 Board객체 생성
+			Board board = new Board();
+			board.setBoardNo(boardNo);
+			board.setBoardTitle(boardTitle);
+			board.setBoardContent(boardContent);
+			
+			// 수정 서비스 호출
+			int result = bService.updateBoard(board);
+			
+			if(result >0 ) {
+				System.out.println("\n[게시글 수정 성공]\n");
+			} else {
+			
+				System.out.println("\n[게시글 수정 실패]\n");
+			}
+			
+		}catch(Exception e) {
+			System.out.println("\n<<게시글 수정 중 예외 발생>>\n");
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	

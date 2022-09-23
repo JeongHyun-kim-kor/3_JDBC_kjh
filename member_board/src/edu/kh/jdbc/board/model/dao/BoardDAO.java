@@ -162,4 +162,35 @@ public class BoardDAO {
 		
 		return result;
 	}
+
+	/** 
+	 * @param conn
+	 * @param board
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateBoard(Connection conn, Board board) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateBoard");
+			// content title, boardNo
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, board.getBoardTitle());
+			pstmt.setString(2, board.getBoardContent());
+			pstmt.setInt(3, board.getBoardNo());
+			
+			
+			result = pstmt.executeUpdate();
+			
+			
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }

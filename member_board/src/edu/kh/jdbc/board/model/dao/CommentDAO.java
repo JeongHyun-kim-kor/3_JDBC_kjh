@@ -142,5 +142,41 @@ public class CommentDAO {
 		
 		return result;
 	}
+
+	
+	// 0923 4교시 3
+	public int delectComment(Connection conn, int commentNo) throws Exception {
+
+		int result = 0;
+		
+		try {
+		String sql = prop.getProperty("deleteComment");
+		
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setInt(1, commentNo);
+		
+		result = pstmt.executeUpdate();
+		
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
