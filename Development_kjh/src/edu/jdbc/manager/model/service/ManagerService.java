@@ -25,5 +25,17 @@ public class ManagerService {
 		
 		return productList;
 	}
+
+	public int manageProduct(Product product) throws Exception {
+
+		Connection conn = getConnetcion();
+		
+		int result = dao.manageProduct(conn,product);
+		
+		if(result >0) commit(conn);
+		else rollback(conn);
+		
+		return result;
+	}
 	
 }

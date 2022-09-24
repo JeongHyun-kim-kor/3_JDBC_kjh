@@ -75,8 +75,8 @@ public class MainView {
 					
 					switch(mInput) {
 					
-					case 1 : managerView.checkProduct(loginManager); break;
-					case 2 : managerView.manageProduct()
+					case 1 : managerView.checkProduct(/*loginManager*/); break;
+					case 2 : managerView.manageProduct();
 					}
 				}
 			

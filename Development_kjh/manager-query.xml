@@ -7,6 +7,12 @@
 		SELECT PRODUCT_NO, CATEGORY, PRODUCT_NAME, STOCK, PRICE
 		FROM "PRODUCT"
 	</entry>
+	
+<entry key="manageProduct">
+	UPDATE "PRODUCT" SET
+	STOCK = ?, PRICE = ?
+	WHERE PRODUCT_NO = ?
+</entry>
 
 
 
