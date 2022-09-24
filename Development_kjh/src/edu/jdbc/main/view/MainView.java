@@ -69,14 +69,16 @@ public class MainView {
 					System.out.println("==== 관리자 로그인 메뉴 ====");
 					System.out.println("1. 상품 확인");
 					System.out.println("2. 재고 관리");
+					System.out.println("3. 상품 추가");
 					System.out.print("\n 메뉴 선택 : ");
 					int mInput = sc.nextInt();
 					System.out.println();
 					
 					switch(mInput) {
 					
-					case 1 : managerView.checkProduct(/*loginManager*/); break;
-					case 2 : managerView.manageProduct();
+					case 1 : managerView.checkProduct(); break;
+					case 2 : managerView.manageProduct(); break;
+					case 3 : managerView.addProduct(); break;
 					}
 				}
 			

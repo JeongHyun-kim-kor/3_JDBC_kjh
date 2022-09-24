@@ -90,4 +90,36 @@ public class ManagerDAO {
 		return result ;
 	}
 
+	public int addProduct(Connection conn, String cate, String pName, int stock, int price) throws Exception{
+
+		int result = 0;
+		try {
+			String sql = prop.getProperty("addProduct");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cate);
+			pstmt.setString(2, pName);
+			pstmt.setInt(3, stock);
+			pstmt.setInt(4, price);
+			result = pstmt.executeUpdate();
+			
+//			Product product = new Product();
+//			product.setProductCate(cate);
+//			product.setProductName(pName);
+//			product.setProductStock(stock);
+//			product.setProductPrice(price);
+			
+			
+			
+			
+		} finally {
+			
+			close(pstmt);
+			
+		}
+		
+		
+		return result;
+	}
+
 }

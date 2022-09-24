@@ -90,6 +90,37 @@ public class ManagerView {
 			e.printStackTrace();
 		}
 	}
+
+
+	public void addProduct() {
+
+		try {
+			System.out.println("\n[상품 추가]\n");
+			
+			System.out.print("카테고리 명 : ");
+			String cate = sc.nextLine();
+			System.out.print("상품 명 : ");
+			String pName = sc.nextLine();
+			System.out.print("재고 수 : ");
+			int stock = sc.nextInt();
+			System.out.print("가격 : ");
+			int price = sc.nextInt();
+			
+//			Product product = new Product(cate, pName, stock, price);
+			
+			int result = service.addProduct(cate, pName, stock, price);
+			
+			if(result > 0) {
+				System.out.println("\n[제품이 추가되었습니다.]\n");
+			} else {
+				System.out.println("추가 실패!");
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	

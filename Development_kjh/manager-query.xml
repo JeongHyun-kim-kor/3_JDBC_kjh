@@ -14,6 +14,9 @@
 	WHERE PRODUCT_NO = ?
 </entry>
 
-
+<entry key="addProduct">
+	INSERT INTO "PRODUCT"
+	VALUES(PRODUCT_NO.NEXTVAL, ?, ? ,?,?)	
+</entry>
 
 </properties>

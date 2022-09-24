@@ -37,5 +37,18 @@ public class ManagerService {
 		
 		return result;
 	}
+
+	public int addProduct(String cate, String pName, int stock, int price) throws Exception {
+
+		Connection conn = getConnetcion();
+		
+		int result = dao.addProduct(conn,cate,pName,stock,price);
+		
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		
+		
+		return result;
+	}
 	
 }
