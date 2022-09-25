@@ -41,7 +41,7 @@ public class MainView {
 				
 				switch(input) {
 				case 1: login(); break; // 로그인  // 기존 회원으로 로그인하는 것
-				
+				case 2 : signUp(); break;
 				case 9 : managerLogin(); break; // 매니저 로그인
 				
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
@@ -93,9 +93,30 @@ public class MainView {
 		
 	}
 
-	
+	private void signUp() {
+		System.out.println("[회원 가입]");
+		
+		String memberId = null;
+		
+		try {
+			while(true) {
+				System.out.print("아이디 입력 : ");
+				memberId = sc.next();
+				
+				// 아이디 중복 검사
+				int result = service.idDupCheck(memberId);
+				System.out.println();
+				
+				
+			}
+			
+			
+		} catch(Exception e	) {
+			e.printStackTrace();
+			System.out.println("회원 가입 중 예외 발생");
+		}
+	}
 
-	
 
 
 	private void login() {

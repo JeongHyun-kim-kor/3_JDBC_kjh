@@ -34,7 +34,8 @@ public class MemberView {
 				System.out.println();
 				System.out.println("1. 내 정보 조회");
 				System.out.println("2. 구매하기");
-				System.out.println("3. 구매 내역 확인");
+				System.out.println("3. 구매 내역 확인"); // >> X
+				System.out.println("4. ");
 				
 				
 				System.out.println("0. 메인메뉴로 이동");

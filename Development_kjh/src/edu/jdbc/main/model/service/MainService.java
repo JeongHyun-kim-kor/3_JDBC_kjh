@@ -43,6 +43,22 @@ public class MainService {
 		
 		return loginManager;
 	}
+
+
+
+
+
+
+	public int idDupCheck(String memberId) throws Exception {
+
+		Connection conn = getConnetcion();
+		
+		int result = dao.idDupCheck(conn, memberId);
+		
+		close(conn);
+		
+		return result;
+	}
 	
 	 
 	

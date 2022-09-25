@@ -93,6 +93,13 @@ public class MainDAO {
 		
 		return loginManager;
 	}
+
+	public int idDupCheck(Connection conn, String memberId) {
+
+		
+		
+		return 0;
+	}
 	
 
 		

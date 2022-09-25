@@ -24,7 +24,7 @@ public class MainService {
 		// 2. DAO 메서드 호출 후 결과 반환 받기
 		int result = dao.idDupCheck(conn, memberId);
 		
-		//3. Connection 반환 (SELECT 구문은 트랜잭션 제어 필요X)
+		//3. Connection 반환 (DuSELECT 구문은 트랜잭션 제어 필요X)
 		close(conn);
 		
 		// 조회 결과 반환
