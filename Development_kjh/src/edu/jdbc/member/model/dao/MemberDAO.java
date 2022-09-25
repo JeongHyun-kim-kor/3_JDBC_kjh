@@ -1,6 +1,6 @@
 package edu.jdbc.member.model.dao;
 
-import static edu.jdbc.common.JDBCTemplate.close;
+import static edu.jdbc.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -23,7 +23,7 @@ public class MemberDAO {
 	
 	public MemberDAO() {
 		try { 
-			Properties prop = new Properties();
+			prop = new Properties();
 			prop.loadFromXML(new FileInputStream("member-query.xml"));
 			
 		}catch(Exception e) {
@@ -34,11 +34,11 @@ public class MemberDAO {
 	
 	
 	public int buyProduct(Connection conn, Product pd) throws Exception {
-		Product p = new Product();
-//		List <Product> productList = mService.selectAll();
-		
-//		p.setProductCate("dd");
-//		p.setProductPrice(123);
+//		Product p = new Product();
+
+//		
+//		String cate = pd.getProductCate();
+//		int price = pd.getProductPrice();
 		
 		int result = 0;
 		
@@ -47,10 +47,10 @@ public class MemberDAO {
 			//카테고리/ 제품명, 개수 /가격
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, ); // 다른 테이블에 있는 값
+			pstmt.setString(1, pd.getProductCate()); // 다른 테이블에 있는 값
 			pstmt.setString(2, pd.getProductName()); // 입력
 			pstmt.setInt(3, pd.getProductStock()); // 입력
-			pstmt.setInt(4, );
+			pstmt.setInt(4, pd.getProductPrice());
 			
 			result = pstmt.executeUpdate();
 			

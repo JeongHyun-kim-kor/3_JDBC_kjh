@@ -6,8 +6,9 @@
 
 
 <entry key="buyProduct">
-		
 	INSERT INTO "BUYPRODUCT"
-	VALUES(BUYPRODUCT_NO, ?, ? , ? ,?)d
+	VALUES(BUYPRODUCT_NO.NEXTVAL, ?, ? , ? ,?,DEFAULT, DEFAULT)
 	</entry>
+	
+
 </properties>

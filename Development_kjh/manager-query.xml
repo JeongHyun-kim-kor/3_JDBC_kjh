@@ -19,4 +19,10 @@
 	VALUES(PRODUCT_NO.NEXTVAL, ?, ? ,?,?)	
 </entry>
 
+<entry key="buyProductSelectAll">
+
+SELECT PRODUCT_NO, CATEGORY, PRODUCT_NAME, STOCK, PRICE, BUYDATE, DELETE_NY
+FROM "BUYPRODUCT"
+</entry>
+
 </properties>
