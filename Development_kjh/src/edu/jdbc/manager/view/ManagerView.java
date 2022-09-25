@@ -1,6 +1,5 @@
 package edu.jdbc.manager.view;
 
-import java.security.spec.ECFieldF2m;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
