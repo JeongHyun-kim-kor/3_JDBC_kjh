@@ -336,7 +336,8 @@ SELECT * FROM "COMMENT" ;
 
 
 
-
+-- 다음 게시글 번호 생성
+SELECT SEQU_BOARD_NO.NEXTVAL FROM DUAL;
 
 
 

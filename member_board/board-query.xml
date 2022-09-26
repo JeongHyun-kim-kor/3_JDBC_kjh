@@ -61,6 +61,31 @@
 	WHERE BOARD_NO =?
 	</entry>
 	
+	<!-- 게시글 등록 -->
+	<entry key ="insertBoard">
+	<!-- INSERT INTO "BOARD" VALUES(컬럼 다 적어야한다)
+	
+	INSERT INTO "BOARD)" (컬럼명1, 컬럼명2)
+	VALUES(값1, 값2,) -->
+	INSERT INTO "BOARD" (BOARD_NO, BOARD_TITLE, BOARD_CONTENT, MEMBER_NO)
+	VALUES(SEQ_BOARD_NO.NEXTVAL, ?,?,?)
+	
+	</entry>
+	
+	
+	<!--  게시글 번호 생성 -->
+	<entry key = "nextBoardNo">
+	SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </properties>

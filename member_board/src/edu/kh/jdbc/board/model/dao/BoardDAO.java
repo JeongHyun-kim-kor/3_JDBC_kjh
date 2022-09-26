@@ -221,4 +221,90 @@ public class BoardDAO {
 
 		return result;
 	}
+
+	/** 게시글 등록 DAO
+	 * @param conn
+	 * @param board
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertBoard(Connection conn, Board board) throws Exception{
+
+		int result = 0; // try 위에 다 만드는 이유 : try{}안에서만 쓸 수 잇기때문에 return을 못하고..
+		
+		try { // 예외가 발생할 것 같은 부분
+			
+			String sql = prop.getProperty("insertBoard"); //prop = key:value = 둘 다 string
+			// key가 insertBoard인  // boardDAO의 기본생성자에서 xml파일을 읽어온다.
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, board.getBoardTitle());
+			pstmt.setString(2, board.getBoardContent());
+			pstmt.setInt(3, board.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally { // 예외가 발생하든말든 무조건 수행
+			
+			close(pstmt);
+			
+			
+		}
+		
+		
+		return result;
+	}
+
+	/**		// 0926 1교시 2.(1)
+	 * @param conn
+	 * @return boardNo
+	 * @throws Exception
+	 */
+	public int nextBoardNo(Connection conn) throws Exception{
+		
+		int boardNo = 0;
+		
+		try {
+			// 다음 번호 생성하는 SQL > XML 파일에 / BOARD_QUERY
+			String sql = prop.getProperty("nextBoardNo");
+			
+			// PLACEHOLDER없어도 그냥 가능
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery(); // select 수행
+			
+			if(rs.next()) { // 조회 결과 1행밖에 없음
+				boardNo = rs.getInt(1); // 첫 번째 컬럼 값을 얻어와 boardNo에 저장
+				
+			}
+			
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return boardNo;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
