@@ -337,13 +337,45 @@ SELECT * FROM "COMMENT" ;
 
 
 -- 다음 게시글 번호 생성
-SELECT SEQU_BOARD_NO.NEXTVAL FROM DUAL;
+SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL;
 
 
 
+-- 검색어가 포함되는 게시글의 목록을 조회;
+--   -> 게시글 목록 조회 확인 + 조건 추가하면 된다.
 
-
-
+SELECT BOARD_NO, BOARD_TITLE, MEMBER_NM, READ_COUNT, 
+--
+	CASE 
+		WHEN SYSDATE - CREATE_DT < 1/24/60
+		THEN FLOOR((SYSDATE - CREATE_DT) * 24 * 60 *60) || '초 전'
+		WHEN SYSDATE - CREATE_DT < 1/24
+		THEN FLOOR((SYSDATE - CREATE_DT) * 24 * 60 ) || '분 전'
+		WHEN SYSDATE - CREATE_DT < 1
+		THEN FLOOR((SYSDATE - CREATE_DT)  * 24 ) || '시간 전'
+	--
+		ELSE TO_CHAR(CREATE_DT, 'YYYY-MM-DD')
+	END CREATE_DT,  
+    (SELECT COUNT(*) 	
+    FROM "COMMENT" C 
+    WHERE C.BOARD_NO = B.BOARD_NO) COMMENT_COUNT 
+	FROM "BOARD" B
+JOIN "MEMBER" USING(MEMBER_NO)
+WHERE DELETE_FL ='N'
+-- 제목 
+--AND BOARD_TITLE LIKE '%' || '샘플' || '%' ---- > '%샘플%'  이런거임
+--                            ?자리
+-- AND BOARD_TITLE LIKE '%샘플%' -- 샘플이라는 단어가 포함된 제목 검색
+-- 내용
+--AND BOARD_CONTENT LIKE '%' || '조' || '%'
+--AND BOARD_CONTENT LIKE '%' || ? || '%'
+-- 제목 + 내용 
+--AND (BOARD_TITLE LIKE '%' || ? || '%'
+--OR BOARD_CONTENT LIKE '%' || ? || '%')
+-- OR보다 AND가 우선순위가 더 높아서 ( ) 해줘야한다.
+-- 작성자
+AND MEMBER_NM LIKE '%' || '이' || '%'
+ORDER BY BOARD_NO DESC;
 
 
 

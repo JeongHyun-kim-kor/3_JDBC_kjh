@@ -138,6 +138,9 @@ public class BoardService {
 		int boardNo = dao.nextBoardNo(conn);
 		
 		// 0926 2교시 1.
+		board.setBoardNo(boardNo); // 얻어온 다음 번호를 board에 세팅
+		// -> 다음 게시글 번호, 제목, 내용 , 회원 번호
+		//      1            2   3       4
 		
 		int result = dao.insertBoard(conn, board);
 		// 0926 1교시 2. (등록 후 메뉴가 아닌상세조회로! )
@@ -146,8 +149,13 @@ public class BoardService {
 		// 마지막에 사용한 게시글 번호를 어떻게 불러와야할까?
 		// 삽입한 번호를 입력하기는 힘들어서 차라리 번호를 하나 만들어서 넣자
 		
+		// 0926 2교시 3.
+
+		if(result > 0) { commit(conn);
+				result = boardNo;
+				// INSERT 성고이 생성된 게시글 번호(boardNo)를 결과로 반환
 		
-		if(result > 0) commit(conn);
+		}
 		else          rollback(conn);
 		
 		close(conn);

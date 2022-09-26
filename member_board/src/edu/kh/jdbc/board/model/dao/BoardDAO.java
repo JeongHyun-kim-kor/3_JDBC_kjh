@@ -239,9 +239,12 @@ public class BoardDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, board.getBoardTitle());
-			pstmt.setString(2, board.getBoardContent());
-			pstmt.setInt(3, board.getMemberNo());
+			pstmt.setInt(1, board.getBoardNo()); // 추가
+			
+			// 0926 2교시 2  1, 2,3 이 2 3 4 로 밀림
+			pstmt.setString(2, board.getBoardTitle());
+			pstmt.setString(3, board.getBoardContent());
+			pstmt.setInt(4, board.getMemberNo());
 			
 			result = pstmt.executeUpdate();
 			
