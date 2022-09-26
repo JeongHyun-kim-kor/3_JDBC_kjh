@@ -47,8 +47,10 @@ public class BoardView {
 				case 2: selectBoard();		break; // 게시글 상세 조회
 				//0926 1교시 1.
 				case 3: insertBoard();		break;
+				
+				// 0926 3교시 1.
 				case 4: searchBoard();		break; // 제목 내용 제목+내용 작성자 // 0926 2교시 (6)
-				// -> dbeaver로
+				// -> dbeaver로(2_6)
 				case 0: System.out.println("[로그인 메뉴로 이동합니다.]")  ;		break;
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 				}
@@ -644,9 +646,51 @@ public class BoardView {
 	}
 	
 	
+	/** 0926 3교시 1.
+	 * 게시글 검색
+	 */
 	private void searchBoard() {
 
 		try {
+			System.out.println("\n[게시글 검색]\n");
+			
+			System.out.println("1) 제목");
+			System.out.println("2) 내용");
+			System.out.println("3) 제목 + 내용");
+			System.out.println("4) 작성자");
+			System.out.print("검색 조건 선택 : ");
+			
+			int condition = sc.nextInt();
+			sc.nextLine();
+			
+			
+			if(condition >= 1 && condition <=4) { // 정상 입력 
+				
+				
+				System.out.print("검색어 입력 : ");
+				String query = sc.nextLine();
+				
+				// 검색 서비스 호출 후 결과 반환 받기
+				List<Board> boardList = bService.searchBoard(condition, query);
+				
+				if(boardList.isEmpty()) { // 조회 결과가 없을 경우
+					System.out.println("검색 결과가 없습니다.");
+					
+				} else {
+					for(Board b : boardList) {
+						
+						// 3 | 샘플 제목3[4] | 유저삼 | 3시간전 | 10
+						System.out.printf("%d | %s[%d] | %s | %s | %d\n",
+							b.getBoardNo(), b.getBoardTitle(), b.getCommentCount(),
+							b.getMemberName(),b.getCreateDate(),b.getReadCount());
+					}
+				}
+				
+				
+			} else { // 비정상 입력
+				System.out.println("\n[1~4번 사이의 숫자를 입력해주세요.]\n");
+
+			}
 			
 			
 		} catch(Exception e) {

@@ -1,6 +1,6 @@
 package edu.kh.jdbc.board.model.dao;
 
-import static edu.kh.jdbc.common.JDBCTemplate.*;
+import static edu.kh.jdbc.common.JDBCTemplate.close;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -288,6 +288,71 @@ public class BoardDAO {
 		}
 		
 		return boardNo;
+	}
+
+	
+//	0926 3교시 3.
+	/** 게시글 검색 DAO
+	 * @param conn
+	 * @param condition
+	 * @param query
+	 * @return boardList
+	 * @throws Exception
+	 */
+	public List<Board> searchBoard(Connection conn, int condition, String query) throws Exception{
+
+		List<Board> boardList = new ArrayList<>(); 
+		
+		try {
+			
+			String sql = prop.getProperty("searchBoard1") // 공통된 부분
+						+prop.getProperty("searchBoard2_" + condition)
+						// 입력값 숫자 1, 2, 3, 4 --> condition
+						+prop.getProperty("searchBoard3");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, query); 
+			// 3번(제목+내용)  ? 가 2개 존재하기 때문에 추가 세팅 구문 작성해야함
+			if(condition == 3) pstmt.setString(2, query);
+			
+			rs = pstmt.executeQuery();
+			 
+			// selectAll 복사해오기
+			while(rs.next()) {
+				
+				int boardNo = rs.getInt("BOARD_NO");
+				String boardTitle = rs.getString("BOARD_TITLE");
+				String memberName = rs.getString("MEMBER_NM");
+				int readCount = rs.getInt("READ_COUNT");
+				String createDate = rs.getString("CREATE_DT");
+				int commentCount = rs.getInt("COMMENT_COUNT");
+				
+				// 매개변수생성자? > XXX
+				Board board = new Board();
+				board.setBoardNo(boardNo);
+				board.setBoardTitle(boardTitle);
+				board.setMemberName(memberName);
+				board.setReadCount(readCount);
+				board.setCreateDate(createDate);
+				board.setCommentCount(commentCount);
+				
+				
+				
+				boardList.add(board);
+					
+				}
+			
+		} finally {
+			close(rs);
+			close(pstmt);
+			
+		}
+		
+		
+		
+		
+		return boardList;
 	}
 	
 	

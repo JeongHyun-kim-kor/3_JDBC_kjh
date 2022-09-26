@@ -94,7 +94,7 @@ public class MainDAO {
 		return loginManager;
 	}
 
-	public int idDupCheck(Connection conn, String memberId) {
+	public int idDupCheck(Connection conn, String memberId) throws Exception {
 
 		
 		
