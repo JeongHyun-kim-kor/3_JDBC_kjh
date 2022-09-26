@@ -182,7 +182,7 @@ public class MainView {
 					System.out.println("[비밀번호가 일치하지 않습니다. 다시 입력 해주세요.]");
 				}
 				System.out.println();
-			}
+				}
 	
 				// 이름 입력
 				System.out.print("이름 입력 : ");

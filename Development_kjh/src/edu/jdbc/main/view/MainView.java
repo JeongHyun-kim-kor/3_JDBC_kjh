@@ -32,6 +32,7 @@ public class MainView {
 				System.out.println("**** 로그인 메뉴 ****");
 				System.out.println("1. 로그인");
 				System.out.println("2. 회원 가입");
+				System.out.println("3. 찾기 ");
 				System.out.println("9. 관리자 로그인");
 				System.out.println("0. 프로그램 종료");
 				
@@ -40,9 +41,14 @@ public class MainView {
 				sc.nextLine();
 				
 				switch(input) {
-				case 1: login(); break; // 로그인  // 기존 회원으로 로그인하는 것
+				case 1 : login(); break; // 로그인  // 기존 회원으로 로그인하는 것
 				case 2 : signUp(); break;
+				case 3 : 
 				case 9 : managerLogin(); break; // 매니저 로그인
+				case 0 : 
+						System.out.println("프ㄹ로그램 종료");
+						input = -1;
+						break;
 				
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 				}
@@ -50,7 +56,7 @@ public class MainView {
 					System.out.println("==== 사용자 로그인 메뉴 ====");
 					System.out.println("1. 회원 기능");
 					System.out.println("0. 로그아웃");
-					
+					System.out.println("9. 프로그램 종료 ");
 					System.out.print("\n 메뉴 선택 : ");
 					input = sc.nextInt();
 					System.out.println();
@@ -60,6 +66,14 @@ public class MainView {
 					
 					case 1 : memberView.memberMenu(loginMember); break;
 					
+					case 0 : loginMember = null;	
+							System.out.println("로그아웃 되었습니다.");
+							input = -1;
+							break;
+					case 9 : System.out.println("프로그램 종료");
+							System.exit(0);
+							break;
+					default : System.out.println("메뉴에 작성된 번호만 입력해주세요!");
 					
 					}
 					
@@ -98,6 +112,11 @@ public class MainView {
 		
 		String memberId = null;
 		
+		String memberPw1 = null;
+		String memberPw2 = null;
+		
+		String memberName = null;
+		String memberGender = null;
 		try {
 			while(true) {
 				System.out.print("아이디 입력 : ");
@@ -107,9 +126,53 @@ public class MainView {
 				int result = service.idDupCheck(memberId);
 				System.out.println();
 				
+				if(result ==0) { // 중복 X
+					System.out.println("[사용 가능한 아이디 입니다.]");
+					break;
+				} else {
+					System.out.println("[이미 사용중인 아이디 입니다.]");
+				}
 				
 			}
+			while(true) { // 비밀번호, 비밀번호 확인
+				System.out.print("비밀번호 : ");
+				memberPw1 = sc.next();
+				System.out.print("비밀번호 확인 : ");
+				memberPw2 = sc.next();
+				
+				System.out.println();
+				if(memberPw1.equals(memberPw2)) {
+					System.out.println("[비밀번호 일치.]");
+					break;
+				} else {
+					System.out.println("<입력하신 비밀번호가 서로 일치하지 않습니다.>");
+				}
+			}
 			
+			System.out.print("이름 입력 : ");
+			memberName = sc.next();
+			
+			while(true) {
+				System.out.print("성별 입력(M/F) : ");
+				String gender = sc.next().toUpperCase();
+				
+				if(gender.equals("M") || gender.equals("F")) {
+					break;
+					
+				} else {
+					System.out.println("F 또는 M을 입력해주세요.");
+				}
+			}
+			Member member = new Member(memberId,memberPw1,memberName,memberGender);
+			
+			int result = service.signUp(member);
+			
+			if(result > 0) {
+				System.out.println("회원 가입 완료!.");
+				
+			} else {
+				System.out.println("<<회원 가입 실패>>");
+			}
 			
 		} catch(Exception e	) {
 			e.printStackTrace();

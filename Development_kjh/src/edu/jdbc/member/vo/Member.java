@@ -18,6 +18,18 @@ public class Member {
 	
 	
 	
+	public Member(String memberId, String memberPw, String memberName, String memberGender) {
+		super();
+		this.memberId = memberId;
+		this.memberPw = memberPw;
+		this.memberName = memberName;
+		this.memberGender = memberGender;
+	}
+
+
+
+
+
 	public Member(int memberNo, String memberId, String memberName, String memberGender, String enrollDate) {
 		super();
 		this.memberNo = memberNo;

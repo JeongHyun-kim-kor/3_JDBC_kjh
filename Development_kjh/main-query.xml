@@ -20,4 +20,15 @@ WHERE MANAGER_ID = ?
 AND MANAGER_PW = ?
 </entry>
 
+
+<entry key="idDupCheck">
+SELECT COUNT(*) FROM "MEMBER"
+		WHERE MEMBER_ID = ?
+		AND SECESSION_FL = 'N'
+</entry>
+
+<entry key ="signUp">
+INSERT INTO "MEMBER"
+VALUES(SEQ_MEMBER_NO.NEXTVAL,?,?,?,?,DEFAULT,DEFAULT)
+</entry>
 </properties>

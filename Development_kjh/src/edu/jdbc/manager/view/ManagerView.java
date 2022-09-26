@@ -15,6 +15,7 @@ public class ManagerView {
 	private Manager loginManager = null;
 	private int input = -1;
 	
+//	public static List <Product> productList = null; // 저장...?
 	
 	public void checkProduct()  {
 		

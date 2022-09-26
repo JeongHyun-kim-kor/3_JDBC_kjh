@@ -50,16 +50,9 @@ public class ManagerService {
 		
 		return result;
 	}
-	/// 위치 애매함..
-	public List<Product> buyProductSelectAll() throws Exception {
-		Connection conn =  getConnetcion(); 
-		
-		List<Product> buyProductList = dao.buyProductSelectAll(conn);
-		
-		close(conn);
-		
-		return buyProductList;		
-	}
+	
+
+	
 	
 	
 	

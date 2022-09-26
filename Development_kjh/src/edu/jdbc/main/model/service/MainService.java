@@ -59,6 +59,23 @@ public class MainService {
 		
 		return result;
 	}
+
+
+
+
+
+
+	public int signUp(Member member) throws Exception {
+
+		Connection conn = getConnetcion();
+		
+		int result = dao.signUp(conn, member);
+		
+		if(result >0) commit(conn);
+		else rollback(conn);
+		
+		return result;
+	}
 	
 	 
 	

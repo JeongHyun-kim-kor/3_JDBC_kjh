@@ -1,15 +1,16 @@
 package edu.jdbc.member.model.dao;
 
+import static edu.jdbc.common.JDBCTemplate.close;
 import static edu.jdbc.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.List;
 import java.util.Properties;
 
 import edu.jdbc.manager.model.service.ManagerService;
+import edu.jdbc.manager.view.ManagerView;
 import edu.jdbc.product.vo.Product;
 
 public class MemberDAO {
@@ -19,7 +20,7 @@ public class MemberDAO {
 	private Properties prop;
 	
 	private ManagerService mService = null;
-	
+	private ManagerView mView = null;
 	
 	public MemberDAO() {
 		try { 
@@ -40,7 +41,8 @@ public class MemberDAO {
 //		String cate = pd.getProductCate();
 //		int price = pd.getProductPrice();
 		
-		int result = 0;
+			String cate = mView.
+			int result = 0;
 		
 		try {
 			String sql = prop.getProperty("buyProduct");
@@ -48,9 +50,9 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, pd.getProductCate()); // 다른 테이블에 있는 값
-			pstmt.setString(2, pd.getProductName()); // 입력
-			pstmt.setInt(3, pd.getProductStock()); // 입력
-			pstmt.setInt(4, pd.getProductPrice());
+			pstmt.setString(2, pd.getProductName()); // 입력값
+			pstmt.setInt(3, pd.getProductStock()); // 입력값
+			pstmt.setInt(4, pd.getProductPrice());// 다른 테이블에 있는 값
 			
 			result = pstmt.executeUpdate();
 			
@@ -58,6 +60,51 @@ public class MemberDAO {
 		} finally {
 			close(pstmt);
 		}
+		
+		return result;
+	}
+
+
+	public int updatePw(Connection conn, String currentPw, String newPw1, int memberNo) throws Exception {
+
+		int result = 0;
+		try {
+			String sql = prop.getProperty("updatePw");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, newPw1); // 변경될 비밀번호 ? 자리
+			pstmt.setInt(2, memberNo);
+			pstmt.setString(3, currentPw); // 현재 비밀번호 자리
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int unregister(Connection conn, String memberPw, int memberNo) throws Exception {
+
+		int result = 0;
+		try {
+			String sql = prop.getProperty("unregister");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, memberPw);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally{
+			close(pstmt);
+			
+		}
+		
+		
 		
 		return result;
 	}
