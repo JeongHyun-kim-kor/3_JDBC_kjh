@@ -1,6 +1,7 @@
 package edu.jdbc.member.view;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import edu.jdbc.main.view.MainView;
@@ -8,6 +9,7 @@ import edu.jdbc.manager.model.service.ManagerService;
 import edu.jdbc.manager.view.ManagerView;
 import edu.jdbc.member.model.service.MemberService;
 import edu.jdbc.member.vo.Member;
+import edu.jdbc.product.model.service.ProductService;
 //import edu.jdbc.product.model.service.ProductService;
 import edu.jdbc.product.vo.Product;
 
@@ -17,7 +19,7 @@ public class MemberView {
 	private ManagerService ManagerService = new ManagerService();
 	private MemberService memberService = new MemberService();
 	private Member loginMember =null;
-	
+	private ProductService productService = new ProductService();
 	private int input = -1;
 	
 	public void memberMenu(Member loginMember) {
@@ -163,8 +165,12 @@ public class MemberView {
 		System.out.println("\n[제품 구매하기]\n");
 		
 		ManagerView mv = new ManagerView();
-		mv.checkProduct();
 		
+		System.out.print("구매하실 제품명 : ");
+		String bp = sc.next();
+		
+		// 만약 입력한 제품명이 아래 메서드의 제품명과 같으면?
+		List<Product> catePriceList = productService.selectCatePrice(bp);
 		
 		
 		System.out.println();
@@ -173,8 +179,7 @@ public class MemberView {
 //		System.out.println("구매하실 제품의 카테고리 : ");
 //		String cate =sc.next();
 		
-		System.out.print("구매하실 제품명 : ");
-		String bp = sc.next();
+		
 		
 		System.out.print("구매하실 개수 : ");
 		int count = sc.nextInt();

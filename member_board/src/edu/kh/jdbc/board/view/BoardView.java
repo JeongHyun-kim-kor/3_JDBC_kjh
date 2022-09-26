@@ -366,7 +366,7 @@ public class BoardView {
 		// 댓글 번호를 입력 받아
 		// 1) 해당 댓글이 commentList에 있는지 검사
 		// 2) 있다면 해당 댓글이 로그인한 회원이 작성한 글인지 검사
-		// 내가 쓴 글이면서 (memberNO0, 리스트에 있는가?(commentList)
+		// 내가 쓴 글이면서 (memberNO), 리스트에 있는가?(commentList)
 		
 		try {
 			System.out.println("\n[댓글 수정]\n");

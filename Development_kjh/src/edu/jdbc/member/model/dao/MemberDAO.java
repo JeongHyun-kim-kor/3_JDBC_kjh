@@ -41,7 +41,7 @@ public class MemberDAO {
 //		String cate = pd.getProductCate();
 //		int price = pd.getProductPrice();
 		
-			String cate = mView.
+//			String cate = mView.
 			int result = 0;
 		
 		try {

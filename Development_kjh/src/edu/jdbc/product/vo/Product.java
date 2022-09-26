@@ -18,6 +18,19 @@ public class Product {
 	
 
 
+	// 카테고리 , 가격
+	public Product(String productCate, int productPrice) {
+		super();
+		this.productCate = productCate;
+		this.productPrice = productPrice;
+	}
+
+
+
+
+
+
+
 
 	public int getProductNo() {
 		return productNo;
