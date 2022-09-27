@@ -52,10 +52,10 @@ public class MemberView {
 				switch(input) {
 				case 1 : selectMyInfo(); break;
 				case 2 : updatePw(); break;
-				case 3 : buyProduct(); break;
-//				case 4 : checkBuyProduct(); break;
+				case 3 : buyProduct(); break; // 한데모아져서 나온다..
+//				case 4 : checkBuyProduct(); break; // 구매내역확인
 //				case 5 : deleteBuyProduct(); break;
-				case 6 : unregister(); break;
+				case 6 : unregister(); break; // 탈퇴
 				case 0 : System.out.println("[메인 메뉴로 이동합니다.]"); break;
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 				}
@@ -186,7 +186,12 @@ public class MemberView {
 		
 		if(result>0) {
 			System.out.println("구매 성공!!"); // 제품명, 수량만 출력
+			
+//			int result2 = pService.changeStock(count); // 재고 수 조정
+			
 			System.out.println("[구매한 제품 내역]");
+			
+		
 			List<Product> BuyList = pService.selectAll();
 			for(Product p : BuyList) {
 				System.out.printf("번호 : %d |  상품명 : %s | 구매 개수 : %d  ", 
@@ -206,20 +211,23 @@ public class MemberView {
 	
 
 }
-
-	private void checkBuyProduct()  {
-		
-		System.out.println("\n구매 내역 조회\n");
-		
-		try {
-		
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-
-	}
+//
+//	private void checkBuyProduct()  {
+//		
+//		
+//		try {
+//		if(MainView.loginMember.getMemberNo() ==   )
+//
+//		System.out.println("\n구매 내역 조회\n");
+//		
+//		
+//			
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//
+//	}
 	
 	
 	

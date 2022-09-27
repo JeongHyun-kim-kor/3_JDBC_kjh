@@ -8,7 +8,8 @@ public class Product {
 	private int productStock;
 	private int productPrice;
 	private String buyDate;
-	private String deletyNy;
+	private String deleteNy;
+	private int memberNo;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -36,7 +37,8 @@ public class Product {
 		this.productStock = productStock;
 		this.productPrice = productPrice;
 		this.buyDate = buyDate;
-		this.deletyNy = deletyNy;
+		this.deleteNy = deletyNy;
+		
 	}
 
 
@@ -48,7 +50,7 @@ public class Product {
 		this.productName = productName;
 		this.productStock = productStock;
 		this.buyDate = buyDate;
-		this.deletyNy = deletyNy;
+		this.deleteNy = deletyNy;
 	}
 
 
@@ -69,14 +71,14 @@ public class Product {
 
 
 	public String getDeletyNy() {
-		return deletyNy;
+		return deleteNy;
 	}
 
 
 
 
 	public void setDeletyNy(String deletyNy) {
-		this.deletyNy = deletyNy;
+		this.deleteNy = deletyNy;
 	}
 
 

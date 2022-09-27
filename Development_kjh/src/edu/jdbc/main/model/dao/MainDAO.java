@@ -49,9 +49,9 @@ public class MainDAO {
 										memberId,
 										rs.getString("MEMBER_NAME"),
 										rs.getString("MEMBER_GENDER"),
-										rs.getString("ENROLL_DATE"),
 										rs.getString("PHONE"),
-										rs.getString("EMAIl"));	
+										rs.getString("EMAIL"),	
+									rs.getString("ENROLL_DATE"));
 							
 				
 			} 
