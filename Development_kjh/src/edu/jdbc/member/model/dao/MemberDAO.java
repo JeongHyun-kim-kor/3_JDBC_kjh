@@ -33,22 +33,19 @@ public class MemberDAO {
 	
 	}
 	
+
 	
 	public int buyProduct(Connection conn, Product pd) throws Exception {
-//		Product p = new Product();
 
-//		
-//		String cate = pd.getProductCate();
-//		int price = pd.getProductPrice();
-		
-//			String cate = mView.
 			int result = 0;
 		
 		try {
 			String sql = prop.getProperty("buyProduct");
-			//카테고리/ 제품명, 개수 /가격
+		
+			//카테고리/ 제품명, 개수 /가격s
 			pstmt = conn.prepareStatement(sql);
 			
+
 			pstmt.setString(1, pd.getProductCate()); // 다른 테이블에 있는 값
 			pstmt.setString(2, pd.getProductName()); // 입력값
 			pstmt.setInt(3, pd.getProductStock()); // 입력값

@@ -32,7 +32,7 @@ public class MainView {
 				System.out.println("**** 로그인 메뉴 ****");
 				System.out.println("1. 로그인");
 				System.out.println("2. 회원 가입");
-				System.out.println("3. 찾기 ");
+				System.out.println("3. 아이디 및 비밀번호 찾기");
 				System.out.println("9. 관리자 로그인");
 				System.out.println("0. 프로그램 종료");
 				
@@ -43,11 +43,10 @@ public class MainView {
 				switch(input) {
 				case 1 : login(); break; // 로그인  // 기존 회원으로 로그인하는 것
 				case 2 : signUp(); break;
-				case 3 : 
+				case 3 : findIdPw(); break;
 				case 9 : managerLogin(); break; // 매니저 로그인
 				case 0 : 
-						System.out.println("프ㄹ로그램 종료");
-						input = -1;
+						System.out.println("프로그램 종료");
 						break;
 				
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
@@ -106,6 +105,8 @@ public class MainView {
 		} while(input !=0);
 		
 	}
+
+	
 
 	private void signUp() {
 		System.out.println("[회원 가입]");
@@ -236,8 +237,169 @@ public class MainView {
 	}
 	
 	
+	/** 아이디 및 비밀번호 찾기
+	 * 	아이디 : 이름, 휴대폰번호 or 이메일
+	 *  비밀번호 : 아이디 이름, 휴대폰 번호 or 이메일
+	 */
+	private void findIdPw() {
+		
+		int input = -1;
+
+		System.out.println("\n[아이디 또는 비밀번호 찾기]\n");
+		
+		System.err.println("======= 메뉴 =======");
+		System.out.println("1) 아이디 찾기 ");
+		System.out.println("2) 비밀번호 찾기");
+		System.out.println("9) 프로그램 종료");
+		System.out.print("메뉴 입력 : ");
+		input = sc.nextInt();
+		sc.nextLine();
+		
+		do {
+			try {
+			
+		
+		switch(input) {
+		case 1 : findId(); break;
+		case 2 : findPw(); break;
+		case 9 : System.out.println("프로그램 종료");
+				System.exit(0);    break;
+		default : System.out.println("제대로 입력해주세요.");
+		
+		}
+			}catch(InputMismatchException e) {
+				e.printStackTrace();
+			}
+		}while(input != 0);
+		
+	}
+
+
+
 	
 
+
+	private void findId() {
+/*
+ * contains()_특정 문자의 포함여부 결과를 true 또는 false로 반환
+ */
+		try {
+		System.out.println("\n< 아이디 찾기 >\n");
+		System.out.print("찾는 방법 선택 : [ (1) 이메일로 찾기 / (2) 휴대폰번호로 찾기 ] >> ");
+		int input = sc.nextInt();
+		
+		if(input == 1) {
+			System.out.print("이름을 입력해주세요 : ");
+			String name = sc.next();
+			System.out.print("가입하신 이메일을 입력해주세요 : ");
+			String email = sc.next();
+
+			String id = service.findIdByEmail(name,email);
+			
+			if(id != null) {
+				System.out.println("찾으시는 아이디 : " + id);
+			} else 
+				System.out.println("일치하는 Id가 없습니다.");
+		} 
+		if(input == 2) {
+			System.out.print("이름을 입력해주세요 : ");
+			String name = sc.next();
+			System.out.print("휴대폰번호를 입력해주세요 : ");
+			String phone = sc.next();
+
+			String id = service.findIdByPhone(name,phone);
+			
+			if(id != null) {
+				System.out.println("찾으시는 아이디 : " + id);
+			} else {
+				System.out.println("일치하는 Id가 없습니다.");
+			}
+
+		} 
+		
+		
+		
+		
+		
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+
+	}
+		
+	
+	
+	
+	private void findPw() {
+		
+		
+		
+		
+		try {
+			System.out.println("\n< 비밀번호 찾기 >\n");
+			System.out.print("찾는 방법 선택 : [ (1) 이메일로 찾기 / (2) 휴대폰번호로 찾기 ] >> ");
+			int input = sc.nextInt();
+			
+			if(input == 1) {
+				System.out.print("아이디를 입력해주세요 : ");
+				String id = sc.next();
+				System.out.print("이름을 입력해주세요 : ");
+				String name = sc.next();
+				System.out.print("가입하신 이메일을 입력해주세요 : ");
+				String email = sc.next();
+
+				String pw = service.findPwByEmail(id, name,email);
+				
+				if(id != null) {
+					System.out.println("찾으시는 비밀번호 : " + pw);
+				} else {
+					System.out.println("비밀번호를 찾을 수 없습니다.");
+				}
+
+			} 
+			if(input == 2) {
+				System.out.print("이름을 입력해주세요 : ");
+				String name = sc.next();
+				System.out.print("휴대폰번호를 입력해주세요 : ");
+				String phone = sc.next();
+
+				String id = service.findIdByPhone(name,phone);
+				
+				if(id != null) {
+					System.out.println("찾으시는 아이디 : " + id);
+				} else {
+					System.out.println("일치하는 Id가 없습니다.");
+				}
+
+			} 
+			
+			
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

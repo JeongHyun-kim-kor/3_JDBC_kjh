@@ -49,8 +49,10 @@ public class MainDAO {
 										memberId,
 										rs.getString("MEMBER_NAME"),
 										rs.getString("MEMBER_GENDER"),
-										rs.getString("ENROLL_DATE"));	
-				
+										rs.getString("ENROLL_DATE"),
+										rs.getString("PHONE"),
+										rs.getString("EMAIl"));	
+							
 				
 			} 
 		}finally{
@@ -140,6 +142,101 @@ public class MainDAO {
 		}
 		
 		return result;
+	}
+
+	public String findId(Connection conn, String name, String emailPhone) throws Exception {
+		
+		try {
+			
+			String sql = prop.getProperty("findId");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			
+			
+		}
+		finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		
+		
+		return null;
+	}
+
+	public String findIdByEmail(Connection conn, String name, String emailPhone) throws Exception {
+		
+		String id = "";
+		try {
+			String sql =prop.getProperty("findIdByEmail");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, emailPhone);
+			pstmt.setString(2, name);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+//				Member member =new Member();
+				
+				id = rs.getString("MEMBER_ID");
+				
+				
+			}
+			
+			
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return id;
+	}
+
+	public String findIdByPhone(Connection conn, String name, String phone) throws Exception {
+		String id = "";
+		try {
+			String sql =prop.getProperty("findIdByPhone");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, phone);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+//				Member member =new Member();
+				
+				id = rs.getString("MEMBER_ID");
+				
+				
+			}
+			
+			
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return id;
+	}
+
+	public String findPwByEmail(Connection conn,String id, String name, String email) throws Exception {
+		
+		String Pw = null;
+		
+		try {
+			String sql = prop.getProperty("findPwByEmail");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, email);
+			pstmt.setString(3, name);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				Pw = rs.getString("MEMBER_PW");
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return Pw;
 	}
 	
 

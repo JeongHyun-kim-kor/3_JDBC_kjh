@@ -19,7 +19,7 @@ public class MemberView {
 	private ManagerService ManagerService = new ManagerService();
 	private MemberService memberService = new MemberService();
 	private Member loginMember =null;
-	private ProductService productService = new ProductService();
+	private ProductService pService = new ProductService();
 	private int input = -1;
 	
 	public void memberMenu(Member loginMember) {
@@ -36,10 +36,10 @@ public class MemberView {
 				System.out.println();
 				System.out.println("1. 내 정보 조회");
 				System.out.println("2. 비밀번호 변경");
-				System.out.println("3. 구매하기");
-				System.out.println("4. 구매 내역 확인"); // >> X
+				System.out.println("3. 구매하기"); // >> X
+//				System.out.println("4. 구매 내역 확인"); // >> X
 				
-				System.out.println("5. ");
+//				System.out.println("5. ");
 				System.out.println("6. 탈퇴하기");
 				
 				
@@ -53,8 +53,8 @@ public class MemberView {
 				case 1 : selectMyInfo(); break;
 				case 2 : updatePw(); break;
 				case 3 : buyProduct(); break;
-				case 4 : checkBuyProduct(); break;
-				case 5 : deleteBuyProduct(); break;
+//				case 4 : checkBuyProduct(); break;
+//				case 5 : deleteBuyProduct(); break;
 				case 6 : unregister(); break;
 				case 0 : System.out.println("[메인 메뉴로 이동합니다.]"); break;
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
@@ -78,7 +78,7 @@ public class MemberView {
 		
 		while(true) {
 			
-			System.out.print("정말 탈퇴하시곘습니까?(Y/N)");
+			System.out.print("정말 탈퇴하시겠습니까?(Y/N)");
 			char ch =sc.next().toUpperCase().charAt(0);
 			
 			if(ch =='Y') { 						// 로그인된 사람의 비밀번호 / 회원번호
@@ -96,7 +96,7 @@ public class MemberView {
 				System.out.println("[취소되었습니다.]");
 				break;
 			} else {
-				System.out.println("\n[Y또는 N을 입력해주세요.]\n");
+				System.out.println("\n[Y 또는 N을 입력해주세요.]\n");
 			}
 			
 		}
@@ -154,6 +154,8 @@ public class MemberView {
 		System.out.println("아이디 : " + loginMember.getMemberId());
 		System.out.println("이름 : " + loginMember.getMemberName());
 		System.out.println("성별 : "+ loginMember.getMemberGender());
+		System.out.println("휴대폰 번호 : "+ loginMember.getPhone());
+		System.out.println("이메일 : "+ loginMember.getEmail());
 		System.out.println("가입일 : "+ loginMember.getEnrollDate());
 		
 	}
@@ -163,48 +165,35 @@ public class MemberView {
 		
 		try {
 		System.out.println("\n[제품 구매하기]\n");
-		
 		ManagerView mv = new ManagerView();
+		mv.checkProduct();
+		System.out.println();
 		
 		System.out.print("구매하실 제품명 : ");
 		String bp = sc.next();
 		
-		// 만약 입력한 제품명이 아래 메서드의 제품명과 같으면?
-		List<Product> catePriceList = productService.selectCatePrice(bp);
-		
-		
-		System.out.println();
-		
-		
-//		System.out.println("구매하실 제품의 카테고리 : ");
-//		String cate =sc.next();
-		
-		
-		
 		System.out.print("구매하실 개수 : ");
 		int count = sc.nextInt();
 		
-//		System.out.print("구매하는 제품의 가격 : ");
-//		int price = sc.nextInt();
+
 		
 		Product pd = new Product();
 		pd.setProductName(bp);
 		pd.setProductStock(count);
-//		pd.setProductCate(cate);
-//		pd.setProductPrice(price);
+		
 		
 		int result = memberService.buyProduct(pd);
 		
 		if(result>0) {
-			System.out.println("구매 성공!!");
-//			System.out.println("[구매한 제품 내역]");
-////			List<Product> productList = pService.selectAll();
-//			for(Product p : buyProductList) {
-//				System.out.printf("번호 : %d | 카테고리 : %s |"
-//				+ " 상품명 : %s | 재고 수 : %d | 가격 : %d \n" , 
-//				p.getProductNo(),p.getProductCate(),p.getProductName()
-//				, p.getProductStock(),p.getProductPrice());
-				
+			System.out.println("구매 성공!!"); // 제품명, 수량만 출력
+			System.out.println("[구매한 제품 내역]");
+			List<Product> BuyList = pService.selectAll();
+			for(Product p : BuyList) {
+				System.out.printf("번호 : %d |  상품명 : %s | 구매 개수 : %d  ", 
+				p.getProductNo(),p.getProductName()
+				, p.getProductStock());
+				System.out.println();
+			}
 				System.out.println("======================");
 			
 			} else {

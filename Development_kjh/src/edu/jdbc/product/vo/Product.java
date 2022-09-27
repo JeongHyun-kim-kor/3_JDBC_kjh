@@ -7,27 +7,77 @@ public class Product {
 	private String productName;
 	private int productStock;
 	private int productPrice;
+	private String buyDate;
+	private String deletyNy;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
-	
-
-	
 
 
-	// 카테고리 , 가격
-	public Product(String productCate, int productPrice) {
+	public Product(int productNo, String productName, int productStock) {
 		super();
-		this.productCate = productCate;
-		this.productPrice = productPrice;
+		this.productNo = productNo;
+		this.productName = productName;
+		this.productStock = productStock;
 	}
 
 
 
 
+	public Product(int productNo, String productCate, String productName, int productStock, int productPrice,
+			String buyDate, String deletyNy) {
+		super();
+		this.productNo = productNo;
+		this.productCate = productCate;
+		this.productName = productName;
+		this.productStock = productStock;
+		this.productPrice = productPrice;
+		this.buyDate = buyDate;
+		this.deletyNy = deletyNy;
+	}
+
+
+
+
+	public Product(int productNo, String productName, int productStock, String buyDate, String deletyNy) {
+		super();
+		this.productNo = productNo;
+		this.productName = productName;
+		this.productStock = productStock;
+		this.buyDate = buyDate;
+		this.deletyNy = deletyNy;
+	}
+
+
+
+
+	public String getBuyDate() {
+		return buyDate;
+	}
+
+
+
+
+	public void setBuyDate(String buyDate) {
+		this.buyDate = buyDate;
+	}
+
+
+
+
+	public String getDeletyNy() {
+		return deletyNy;
+	}
+
+
+
+
+	public void setDeletyNy(String deletyNy) {
+		this.deletyNy = deletyNy;
+	}
 
 
 

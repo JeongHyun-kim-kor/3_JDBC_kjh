@@ -1,5 +1,8 @@
 package edu.jdbc.product.model.dao;
 
+import static edu.jdbc.common.JDBCTemplate.close;
+import static edu.jdbc.common.JDBCTemplate.*;
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import static edu.jdbc.common.JDBCTemplate.*;
+
 import edu.jdbc.product.vo.Product;
 
 public class ProductDAO {
@@ -30,7 +33,13 @@ public class ProductDAO {
 	
 	
 	}
-	// 검색한 제품명의 카테고리와 가격 가져오기
+	
+	/** 구매내역 가져오기
+	 * @param bp
+	 * @param conn
+	 * @return	resultList
+	 * @throws Exception
+	 */
 	public List<Product> selectCatePrice(String bp,Connection conn) throws Exception {
 		
 		List<Product> resultList = new ArrayList<>();
@@ -47,6 +56,7 @@ public class ProductDAO {
 				Product product = new Product();
 				product.setProductCate(cate);
 				product.setProductPrice(price);
+				
 				resultList.add(product);
 			}
 			
@@ -54,6 +64,37 @@ public class ProductDAO {
 			close(rs);
 			close(stmt);
 		}
+		
+		return resultList;
+	}
+	public List<Product> selectAll(Connection conn) throws Exception {
+
+		List<Product> resultList = new ArrayList<>();
+		
+		try {
+			String sql = prop.getProperty("selectAll");
+					
+			pstmt =  conn.prepareStatement(sql);
+			
+			rs =pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Product product = new Product(rs.getInt("PRODUCT_NO"),
+//									rs.getString("CATEGORY"),
+									rs.getString("PRODUCT_NAME"),
+									rs.getInt("STOCK"));
+//									rs.getInt("PRICE"),
+//									rs.getString("BUYDATE"),
+//									rs.getString("DELETE_NY"));
+					
+					resultList.add(product);
+			}
+		} finally {
+			close(rs);
+			close(pstmt);
+			
+		}
+		
 		
 		return resultList;
 	}

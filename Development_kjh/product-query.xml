@@ -3,11 +3,19 @@
 <properties>
 <comment>product-query.xml file</comment>
 
-<entry key="selectCatePrice">
-SELECT CATEGORY, PRICE
+<entry key="selectAll">
+
+SELECT PRODUCT_NO, PRODUCT_NAME, STOCK, BUYDATE, DELETE_NY
 FROM "BUYPRODUCT"
-WHERE PRODUCT_NAME = ?
+
+
 </entry>
+
+
+
+
+
+
 
 
 </properties>

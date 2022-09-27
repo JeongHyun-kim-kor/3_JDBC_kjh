@@ -76,6 +76,62 @@ public class MainService {
 		
 		return result;
 	}
+
+
+
+
+	public String findIdByEmail(String name, String email) throws Exception {
+		Connection conn = getConnetcion();
+		String Id = null;
+		if(email.contains("@")) {
+			Id = dao.findIdByEmail(conn, name,email);
+		} else {
+			System.out.println("[이메일 형식에 맞게 입력해주세요]");
+		}
+		
+		
+		return Id;
+	}
+
+
+	public String findIdByPhone(String name, String phone) throws Exception {
+		Connection conn = getConnetcion();
+		String Id = null;
+		
+		if(phone.contains("010")) {
+			Id = dao.findIdByPhone(conn, name,phone);
+
+		} else {
+			System.out.println("[010을 포함한 휴대폰 번호를 입력해주세요.]");
+		}
+		close(conn);
+		
+		return Id;
+
+				
+				
+	}
+
+
+
+
+
+
+	public String findPwByEmail(String id, String name, String email) throws Exception{
+
+		Connection conn = getConnetcion();
+		String Pw = null;
+			
+		if(email.contains("@")) {
+			Pw = dao.findPwByEmail(conn,id, name,email);
+
+		} else {
+			System.out.println("[이메일 형식에 맞게 입력해주세요]");
+		}
+		close(conn);
+		
+		return Pw;
+	}
 	
 	 
 	

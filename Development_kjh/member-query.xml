@@ -7,7 +7,7 @@
 
 <entry key="buyProduct">
 	INSERT INTO "BUYPRODUCT"
-	VALUES(BUYPRODUCT_NO.NEXTVAL, 제품카테고리, ? , ? ,가격,DEFAULT, DEFAULT)
+	VALUES(BUYPRODUCT_NO.NEXTVAL, ?, ? , ? ,?,DEFAULT, DEFAULT)
 	</entry>
 	
 <entry key ="updatePw">
@@ -23,8 +23,9 @@ UPDATE "MEMBER" SET
 SECESSION_FL = 'Y'
 WHERE MEMBER_NO =?
 AND MEMBER_PW = ?
-
-
 </entry>
+
+<!-- SELECT PRICE FROM PRODUCT  WHERE PRODUCT_NAME = '도마'
+SELECT CATEGORY FROM PRODUCT WHERE PRODUCT_NAME = '도마' -->
 
 </properties>

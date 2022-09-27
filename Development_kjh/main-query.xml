@@ -4,7 +4,7 @@
 <comment>main-query.xml.xml file</comment>
 
 <entry key="login">
-SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_GENDER, 
+SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_GENDER, PHONE, EMAIL,
 TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월"  DD"일" HH24:MI:SS') ENROLL_DATE
 FROM "MEMBER"
 WHERE MEMBER_ID = ?
@@ -31,4 +31,33 @@ SELECT COUNT(*) FROM "MEMBER"
 INSERT INTO "MEMBER"
 VALUES(SEQ_MEMBER_NO.NEXTVAL,?,?,?,?,DEFAULT,DEFAULT)
 </entry>
+
+
+<entry key = "findIdByEmail">
+SELECT MEMBER_ID
+FROM "MEMBER"
+WHERE EMAIL = ? 
+AND MEMBER_NAME = ?
+</entry>
+
+<entry key = "findIdByPhone">
+SELECT MEMBER_ID
+FROM "MEMBER"
+WHERE PHONE = ?
+</entry>
+
+<entry key = "findPwByEmail">
+SELECT MEMBER_PW
+FROM "MEMBER"
+WHERE MEMBER_ID =? AND EMAIL = ? 
+AND MEMBER_NAME = ?
+</entry>
+
+
+
+
+
+
+
+
 </properties>

@@ -10,15 +10,22 @@ import edu.jdbc.product.vo.Product;
 public class ProductService {
 
 	private ProductDAO dao = new ProductDAO();
+
 	
-	public List<Product> selectCatePrice(String bp) throws Exception{
+	
+	
+	public List<Product> selectAll() throws Exception{
+
 		Connection conn = getConnetcion();
 		
-		List<Product> productList = dao.selectCatePrice(conn,bp);
+		List<Product> productList = dao.selectAll(conn);
 		
 		close(conn);
 		
 		return productList;
 	}
+	
+	
+	
 	
 }

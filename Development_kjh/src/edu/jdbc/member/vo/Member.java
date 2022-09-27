@@ -7,6 +7,8 @@ public class Member {
 	private String memberPw;
 	private String memberName;
 	private String memberGender;
+	private String phone;
+	private String email;
 	private String enrollDate;
 	private String secessionFlag;
 	
@@ -30,12 +32,60 @@ public class Member {
 
 
 
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+
+
+
 	public Member(int memberNo, String memberId, String memberName, String memberGender, String enrollDate) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberGender = memberGender;
+		this.enrollDate = enrollDate;
+	}
+
+	
+
+
+
+	public Member(int memberNo, String memberId,  String memberName, String memberGender, String phone,
+			String email, String enrollDate) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberGender = memberGender;
+		this.phone = phone;
+		this.email = email;
 		this.enrollDate = enrollDate;
 	}
 
