@@ -24,6 +24,21 @@ public class ProductService {
 		
 		return productList;
 	}
+
+
+
+
+	public int changeStock(int count) throws Exception{
+
+		Connection conn = getConnetcion();
+		
+		int result = dao.changeStock(conn, count);
+		
+		if(result>0) commit(conn);
+		else 		rollback(conn);
+		
+		return result;
+	}
 	
 	
 	

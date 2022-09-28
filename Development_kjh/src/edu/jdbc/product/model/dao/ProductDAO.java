@@ -98,6 +98,24 @@ public class ProductDAO {
 		
 		return resultList;
 	}
+
+	public int changeStock(Connection conn, int count) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("changeStock");
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	
 	
