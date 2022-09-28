@@ -8,6 +8,7 @@ public class MainRun {
 
 		new MainView().mainMenu();
 		
+		
 	}
 
 }

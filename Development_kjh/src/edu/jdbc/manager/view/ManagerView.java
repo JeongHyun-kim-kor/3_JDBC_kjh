@@ -51,7 +51,7 @@ public class ManagerView {
 	 */
 	public void manageProduct() {
 		try {
-		System.out.print("\n[상품 수정]\n");
+		System.out.print("\n[상품 수정 메뉴 입니다.]\n");
 		
 		// 상품 목록 출력
 		

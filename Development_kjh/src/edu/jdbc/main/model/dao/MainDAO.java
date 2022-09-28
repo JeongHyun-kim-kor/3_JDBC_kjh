@@ -135,6 +135,8 @@ public class MainDAO {
 			pstmt.setString(2, member.getMemberPw());
 			pstmt.setString(3, member.getMemberName());
 			pstmt.setString(4, member.getMemberGender());
+			pstmt.setString(5, member.getPhone());
+			pstmt.setString(6, member.getEmail());
 			
 			result = pstmt.executeUpdate();
 		} finally {

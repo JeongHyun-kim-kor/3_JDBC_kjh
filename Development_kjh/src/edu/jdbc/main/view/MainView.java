@@ -36,10 +36,10 @@ public class MainView {
 				System.out.println("9. 관리자 로그인");
 				System.out.println("0. 프로그램 종료");
 				
-				System.out.println("\n메뉴 선택 : ");
+				System.out.print("\n메뉴 선택 : ");
 				input = sc.nextInt();
 				sc.nextLine();
-				
+				System.out.println();
 				switch(input) {
 				case 1 : login(); break; // 로그인  // 기존 회원으로 로그인하는 것
 				case 2 : signUp(); break;
@@ -125,7 +125,6 @@ public class MainView {
 				
 				// 아이디 중복 검사
 				int result = service.idDupCheck(memberId);
-				System.out.println();
 				
 				if(result ==0) { // 중복 X
 					System.out.println("[사용 가능한 아이디 입니다.]");
@@ -133,15 +132,17 @@ public class MainView {
 				} else {
 					System.out.println("[이미 사용중인 아이디 입니다.]");
 				}
+
 				
 			}
+			System.out.println();
+
 			while(true) { // 비밀번호, 비밀번호 확인
 				System.out.print("비밀번호 : ");
 				memberPw1 = sc.next();
 				System.out.print("비밀번호 확인 : ");
 				memberPw2 = sc.next();
 				
-				System.out.println();
 				if(memberPw1.equals(memberPw2)) {
 					System.out.println("[비밀번호 일치.]");
 					break;
@@ -149,7 +150,8 @@ public class MainView {
 					System.out.println("<입력하신 비밀번호가 서로 일치하지 않습니다.>");
 				}
 			}
-			
+			System.out.println();
+
 			System.out.print("이름 입력 : ");
 			memberName = sc.next();
 			
@@ -164,7 +166,13 @@ public class MainView {
 					System.out.println("F 또는 M을 입력해주세요.");
 				}
 			}
-			Member member = new Member(memberId,memberPw1,memberName,memberGender);
+			System.out.print("휴대폰 번호 입력 : ");
+			String phone = sc.next();
+			
+			System.out.print("이메일 입력 : ");
+			String email = sc.next();
+			
+			Member member = new Member(memberId,memberPw1,memberName,memberGender,phone,email);
 			
 			int result = service.signUp(member);
 			
@@ -337,7 +345,7 @@ public class MainView {
 		
 		try {
 			System.out.println("\n< 비밀번호 찾기 >\n");
-			System.out.print("찾는 방법 선택 : [ (1) 이메일로 찾기 / (2) 휴대폰번호로 찾기 ] >> ");
+			System.out.print("찾는 방법 선택 : [ (1) 이메일로 찾기 ] >> ");
 			int input = sc.nextInt();
 			
 			if(input == 1) {

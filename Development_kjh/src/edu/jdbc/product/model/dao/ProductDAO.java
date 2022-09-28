@@ -111,23 +111,7 @@ public class ProductDAO {
 		return resultList;
 	}
 
-	public int changeStock(Connection conn, int count) throws Exception{
-
-		int result = 0;
-		
-		try {
-			String sql = prop.getProperty("changeStock");
-			pstmt = conn.prepareStatement(sql);
-			
-			
-			
-			
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
+	
 
 	public List<Product> checkBuyProductList(Connection conn,int memberNo,int pMemberNo) throws Exception{
 
@@ -159,6 +143,41 @@ public class ProductDAO {
 		}
 		
 		return productList;
+	}
+
+	public int changeStock(Connection conn, String bp, int count) throws Exception {
+		
+		int result = 0;
+		try {
+			String sql = prop.getProperty("changeStock");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,	count);
+			pstmt.setString(2, bp);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return result;
+	}
+
+	public int deleteBuyProduct(Connection conn, int memberNo, int input) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("deleteBuyProduct");
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, input);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

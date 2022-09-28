@@ -1,6 +1,12 @@
 package edu.jdbc.product.model.service;
 
 import static edu.jdbc.common.JDBCTemplate.*;
+import static edu.jdbc.common.JDBCTemplate.close;
+import static edu.jdbc.common.JDBCTemplate.commit;
+import static edu.jdbc.common.JDBCTemplate.rollback;
+import static edu.jdbc.common.JDBCTemplate.close;
+import static edu.jdbc.common.JDBCTemplate.commit;
+import static edu.jdbc.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -9,7 +15,7 @@ import edu.jdbc.product.vo.Product;
 
 public class ProductService {
 
-	private ProductDAO dao = new ProductDAO();
+	private static ProductDAO dao = new ProductDAO();
 
 	
 	
@@ -28,17 +34,7 @@ public class ProductService {
 
 
 
-	public int changeStock(int count) throws Exception{
-
-		Connection conn = getConnetcion();
-		
-		int result = dao.changeStock(conn, count);
-		
-		if(result>0) commit(conn);
-		else 		rollback(conn);
-		
-		return result;
-	}
+	
 
 
 
@@ -54,6 +50,44 @@ public class ProductService {
 		return productList;
 	}
 
+
+
+	public static  int changeStock(String bp, int count) throws Exception{
+
+		Connection conn = getConnetcion();
+		
+		int result = dao.changeStock(conn,bp, count);
+		
+		if(result > 0) commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
+
+
+
+
+
+
+
+
+	public int deleteBuyProduct(int memberNo, int input) throws Exception {
+
+		Connection conn = getConnetcion();
+		
+		int	result = dao.deleteBuyProduct(conn,memberNo,input);
+		
+		if(result > 0) commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		
+		return result;
+	}
 
 
 

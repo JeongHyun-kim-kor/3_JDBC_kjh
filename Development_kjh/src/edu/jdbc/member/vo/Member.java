@@ -16,7 +16,17 @@ public class Member {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public Member(int memberNo, String memberId,  String memberName, String memberGender, String phone,
+			String email, String enrollDate) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberGender = memberGender;
+		this.phone = phone;
+		this.email = email;
+		this.enrollDate = enrollDate;
+	}
 	
 	
 	
@@ -77,16 +87,21 @@ public class Member {
 
 
 
-	public Member(int memberNo, String memberId,  String memberName, String memberGender, String phone,
-			String email, String enrollDate) {
+	
+
+
+
+
+
+	public Member(String memberId, String memberPw, String memberName, String memberGender, String phone,
+			String email) {
 		super();
-		this.memberNo = memberNo;
 		this.memberId = memberId;
+		this.memberPw = memberPw;
 		this.memberName = memberName;
 		this.memberGender = memberGender;
 		this.phone = phone;
 		this.email = email;
-		this.enrollDate = enrollDate;
 	}
 
 

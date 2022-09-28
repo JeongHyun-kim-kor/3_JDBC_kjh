@@ -19,9 +19,16 @@ FROM "BUYPRODUCT";
 WHERE MEMBER_NO = ?
 </entry>
 
+<entry key="changeStock">
+UPDATE "PRODUCT" SET
+STOCK = STOCK - ?
+WHERE PRODUCT_NAME = ?
+</entry>
 
-
-
+<entry key="deleteBuyProduct">
+DELETE FROM BUYPRODUCT 
+WHERE BUY_NO = ?
+</entry>
 
 
 </properties>

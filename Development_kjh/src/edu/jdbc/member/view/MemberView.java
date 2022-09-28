@@ -36,11 +36,9 @@ public class MemberView {
 				System.out.println();
 				System.out.println("1. 내 정보 조회");
 				System.out.println("2. 비밀번호 변경");
-				System.out.println("3. 구매하기"); // >> X
-//				System.out.println("4. 구매 내역 확인"); // >> X
-				
-//				System.out.println("5. ");
-				System.out.println("6. 탈퇴하기");
+				System.out.println("3. 구매하기"); 
+				System.out.println("4. 구매 내역 삭제"); // >> X
+				System.out.println("5. 탈퇴하기");
 				
 				
 				System.out.println("0. 메인메뉴로 이동");
@@ -52,10 +50,9 @@ public class MemberView {
 				switch(input) {
 				case 1 : selectMyInfo(); break;
 				case 2 : updatePw(); break;
-				case 3 : buyProduct(); break; // 한데모아져서 나온다..
-//				case 4 : checkBuyProduct(); break; // 구매내역확인
-//				case 5 : deleteBuyProduct(); break;
-				case 6 : unregister(); break; // 탈퇴
+				case 3 : buyProduct(); break; // + 구매내역, 제품 재고 감소
+				case 4 : deleteBuyProduct(); break;
+				case 5 : unregister(); break; // 탈퇴
 				case 0 : System.out.println("[메인 메뉴로 이동합니다.]"); break;
 				default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 				}
@@ -68,6 +65,40 @@ public class MemberView {
 		
 	}
 
+	private void deleteBuyProduct() {
+
+		System.out.println("\n[구매 내역 삭제 ]\n");
+		
+		try {
+			
+		
+		List<Product> BuyList = pService.selectAll(loginMember.getMemberNo());
+//		System.out.println("구매한 회원 번호 : "+ loginMember.getMemberNo()); // buyProduct테이블에도 동일한 값 입력
+		System.out.println("===========================  현재  ============================");
+		System.out.println("=========================== 구매내역 ===========================");
+		for(Product p : BuyList) {
+			System.out.printf
+			("번호 : %d |  상품명 : %s | 구매 개수 : %d  | 구매 날짜 : %s", 
+			p.getbuyNo(),p.getProductName(), p.getProductStock(), p.getBuyDate());
+			System.out.println();
+		}
+		System.out.print("삭제할 번호 입력 : ");
+		int input = sc.nextInt();
+		sc.nextLine();
+		
+		int result = pService.deleteBuyProduct(loginMember.getMemberNo(), input);
+		
+		if(result >0) {
+			System.out.println("[삭제 완료]");
+		} else {
+			System.out.println("삭제 실패하였습니다.");
+		}
+	
+	} catch(Exception e) {
+		e.printStackTrace();
+		System.out.println("<<구매 내역 삭제중 예외 발생>>");
+	}
+	}
 	private void unregister() {
 		
 	System.out.println("\n[회원 탈퇴]\n");
@@ -185,9 +216,13 @@ public class MemberView {
 		
 		
 		int result = memberService.buyProduct(pd, loginMember.getMemberNo());
-		
+
 		if(result>0) {
-			//
+			//구매 성공시 상품에 있는 재고 수량 감소 (원래 재고량 - 구매량) 0미만은 안되게끔 해야함
+			int result2 = ProductService.changeStock(bp, count);
+
+//			pd.setProductName(bp);
+//			pd.setProductStock(count);
 			
 //			System.out.println("pd에 있는 회원번호 값? : "+ pd.getMemberNo());//null
 			System.out.println("구매 성공!!"); // 제품명, 수량만 출력
@@ -200,20 +235,6 @@ public class MemberView {
 				("번호 : %d |  상품명 : %s | 구매 개수 : %d  | 구매 날짜 : %s", 
 				p.getbuyNo(),p.getProductName(), p.getProductStock(), p.getBuyDate());
 				System.out.println();
-//			if(loginMember.getMemberNo() == )
-//			int result2 = pService.changeStock(count); // 재고 수 조정
-			
-//			if(loginMember.getmemberNo == )
-//			if(MainView.loginMember.getMemberNo()== )
-//			System.out.println("[구매한 제품 내역]");
-//			
-////			subMenu(pd);
-//			List<Product> BuyList = pService.selectAll();
-//			for(Product p : BuyList) {
-//				System.out.printf("번호 : %d |  상품명 : %s | 구매 개수 : %d  ", 
-//				p.getProductNo(),p.getProductName()
-//				, p.getProductStock());
-//				System.out.println();
 			}
 				System.out.println("=============================================================");
 			
@@ -224,48 +245,15 @@ public class MemberView {
 	} catch(Exception e) {
 		e.printStackTrace();
 	}
-//	subMenu(pd);
 
 }
 	
-	private void subMenu(Product product) {
-		
-		
-			if(MainView.loginMember.getMemberNo() == product.getMemberNo()) {
-
-			System.out.println("[구매 내역 확인하기]");
-						
-			int memberNo = MainView.loginMember.getMemberNo();
-			
-				
-				 checkBuyProductList(product.getMemberNo(), memberNo);
-				}
-			}
+	
 		
 	
 	
 
-	private void checkBuyProductList(int memberNo, int pMemberNo) {
-		System.out.println("\n구매 내역 조회\n");
-		try {
-			List<Product> productList = pService.checkBuyProductList(memberNo,pMemberNo);
-			
-			if(productList.isEmpty()) {
-				System.out.println("조회된 내용이 없습니다.");
-			} else {
-				for(Product p : productList) {
-					
-				}
-			}
-			
-			
-				
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		
-	}
-
+	
 	
 	
 	
