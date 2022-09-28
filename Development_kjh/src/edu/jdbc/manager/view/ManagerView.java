@@ -98,9 +98,9 @@ public class ManagerView {
 			System.out.println("\n[상품 추가]\n");
 			
 			System.out.print("카테고리 명 : ");
-			String cate = sc.nextLine();
+			String cate = sc.next();
 			System.out.print("상품 명 : ");
-			String pName = sc.nextLine();
+			String pName = sc.next();
 			System.out.print("재고 수 : ");
 			int stock = sc.nextInt();
 			System.out.print("가격 : ");

@@ -86,7 +86,7 @@ public class MemberView {
 				
 				if(result >0) {
 					System.out.println("[탈퇴되었습니다.]");
-					int input = 0; // 메인 메뉴로 이동
+					input = 0; // 메인 메뉴로 이동
 					MainView.loginMember = null;
 				} else {
 					System.out.println("비밀번호가 일치하지 않습니다.");
