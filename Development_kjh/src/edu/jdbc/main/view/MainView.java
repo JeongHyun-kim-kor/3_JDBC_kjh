@@ -81,7 +81,7 @@ public class MainView {
 				} else if(loginManager != null) {
 					System.out.println("==== 관리자 로그인 메뉴 ====");
 					System.out.println("1. 상품 확인");
-					System.out.println("2. 재고 관리");
+					System.out.println("2. 재고 관리(수량, 가격)");
 					System.out.println("3. 상품 추가");
 					System.out.print("\n 메뉴 선택 : ");
 					int mInput = sc.nextInt();

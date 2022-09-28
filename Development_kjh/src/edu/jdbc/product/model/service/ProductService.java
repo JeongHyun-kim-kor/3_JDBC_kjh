@@ -14,11 +14,11 @@ public class ProductService {
 	
 	
 	
-	public List<Product> selectAll() throws Exception{
+	public List<Product> selectAll(int memberNo) throws Exception{
 
 		Connection conn = getConnetcion();
 		
-		List<Product> productList = dao.selectAll(conn);
+		List<Product> productList = dao.selectAll(conn, memberNo);
 		
 		close(conn);
 		
@@ -39,6 +39,24 @@ public class ProductService {
 		
 		return result;
 	}
+
+
+
+
+	public List<Product> checkBuyProductList(int memberNo, int pMemberNo) throws Exception{
+
+		Connection conn = getConnetcion();
+		
+		List<Product> productList = dao.checkBuyProductList(conn, memberNo, pMemberNo);
+		
+		close(conn);
+		
+		return productList;
+	}
+
+
+
+
 	
 	
 	

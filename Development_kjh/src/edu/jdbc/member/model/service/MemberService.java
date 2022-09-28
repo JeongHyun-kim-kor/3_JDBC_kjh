@@ -14,11 +14,11 @@ public class MemberService {
 	private MemberDAO dao = new MemberDAO();
 	
 	
-	public int buyProduct(Product pd) throws Exception{
+	public int buyProduct(Product pd, int memberNo ) throws Exception{
 
 		Connection conn = getConnetcion();
 		
-		int result = dao.buyProduct(conn,pd);
+		int result = dao.buyProduct(conn,pd, memberNo);
 		
 		
 		if (result > 0) commit(conn);
@@ -51,6 +51,7 @@ public class MemberService {
 		return result;
 	}
 
+	
 
 
 	

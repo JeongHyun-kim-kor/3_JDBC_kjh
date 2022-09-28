@@ -35,7 +35,7 @@ public class MemberDAO {
 	
 
 	
-	public int buyProduct(Connection conn, Product pd) throws Exception {
+	public int buyProduct(Connection conn, Product pd , int memberNo) throws Exception {
 
 			int result = 0;
 		
@@ -46,10 +46,9 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 
-			pstmt.setString(1, pd.getProductCate()); // 다른 테이블에 있는 값
+			pstmt.setInt(1, memberNo); // 다른 테이블에 있는 값
 			pstmt.setString(2, pd.getProductName()); // 입력값
 			pstmt.setInt(3, pd.getProductStock()); // 입력값
-			pstmt.setInt(4, pd.getProductPrice());// 다른 테이블에 있는 값
 			
 			result = pstmt.executeUpdate();
 			

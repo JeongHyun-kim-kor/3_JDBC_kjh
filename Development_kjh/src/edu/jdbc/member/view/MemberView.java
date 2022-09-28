@@ -169,6 +169,8 @@ public class MemberView {
 		mv.checkProduct();
 		System.out.println();
 		
+		//
+		
 		System.out.print("구매하실 제품명 : ");
 		String bp = sc.next();
 		
@@ -182,24 +184,38 @@ public class MemberView {
 		pd.setProductStock(count);
 		
 		
-		int result = memberService.buyProduct(pd);
+		int result = memberService.buyProduct(pd, loginMember.getMemberNo());
 		
 		if(result>0) {
+			//
+			
+//			System.out.println("pd에 있는 회원번호 값? : "+ pd.getMemberNo());//null
 			System.out.println("구매 성공!!"); // 제품명, 수량만 출력
 			
+			List<Product> BuyList = pService.selectAll(loginMember.getMemberNo());
+			System.out.println("구매한 회원 번호 : "+ loginMember.getMemberNo()); // buyProduct테이블에도 동일한 값 입력
+			System.out.println("=========================== 구매내역 ===========================");
+			for(Product p : BuyList) {
+				System.out.printf
+				("번호 : %d |  상품명 : %s | 구매 개수 : %d  | 구매 날짜 : %s", 
+				p.getbuyNo(),p.getProductName(), p.getProductStock(), p.getBuyDate());
+				System.out.println();
+//			if(loginMember.getMemberNo() == )
 //			int result2 = pService.changeStock(count); // 재고 수 조정
 			
-			System.out.println("[구매한 제품 내역]");
-			
-		
-			List<Product> BuyList = pService.selectAll();
-			for(Product p : BuyList) {
-				System.out.printf("번호 : %d |  상품명 : %s | 구매 개수 : %d  ", 
-				p.getProductNo(),p.getProductName()
-				, p.getProductStock());
-				System.out.println();
+//			if(loginMember.getmemberNo == )
+//			if(MainView.loginMember.getMemberNo()== )
+//			System.out.println("[구매한 제품 내역]");
+//			
+////			subMenu(pd);
+//			List<Product> BuyList = pService.selectAll();
+//			for(Product p : BuyList) {
+//				System.out.printf("번호 : %d |  상품명 : %s | 구매 개수 : %d  ", 
+//				p.getProductNo(),p.getProductName()
+//				, p.getProductStock());
+//				System.out.println();
 			}
-				System.out.println("======================");
+				System.out.println("=============================================================");
 			
 			} else {
 			System.out.println("구매 실패!!");
@@ -208,69 +224,51 @@ public class MemberView {
 	} catch(Exception e) {
 		e.printStackTrace();
 	}
-	
+//	subMenu(pd);
 
 }
-//
-//	private void checkBuyProduct()  {
-//		
-//		
-//		try {
-//		if(MainView.loginMember.getMemberNo() ==   )
-//
-//		System.out.println("\n구매 내역 조회\n");
-//		
-//		
-//			
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//
-//	}
 	
-	
-	
-	private void deleteBuyProduct() {
-
+	private void subMenu(Product product) {
 		
+		
+			if(MainView.loginMember.getMemberNo() == product.getMemberNo()) {
+
+			System.out.println("[구매 내역 확인하기]");
+						
+			int memberNo = MainView.loginMember.getMemberNo();
+			
+				
+				 checkBuyProductList(product.getMemberNo(), memberNo);
+				}
+			}
+		
+	
+	
+
+	private void checkBuyProductList(int memberNo, int pMemberNo) {
+		System.out.println("\n구매 내역 조회\n");
+		try {
+			List<Product> productList = pService.checkBuyProductList(memberNo,pMemberNo);
+			
+			if(productList.isEmpty()) {
+				System.out.println("조회된 내용이 없습니다.");
+			} else {
+				for(Product p : productList) {
+					
+				}
+			}
+			
+			
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
 
-
-
-
-
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+} // 끝

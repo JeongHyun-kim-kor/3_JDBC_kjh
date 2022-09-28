@@ -67,7 +67,7 @@ public class ProductDAO {
 		
 		return resultList;
 	}
-	public List<Product> selectAll(Connection conn) throws Exception {
+	public List<Product> selectAll(Connection conn, int memberNo) throws Exception {
 
 		List<Product> resultList = new ArrayList<>();
 		
@@ -76,17 +76,29 @@ public class ProductDAO {
 					
 			pstmt =  conn.prepareStatement(sql);
 			
+			pstmt.setInt(1, memberNo);
+			
 			rs =pstmt.executeQuery();
 			
 			while(rs.next()) {
-				Product product = new Product(rs.getInt("PRODUCT_NO"),
-//									rs.getString("CATEGORY"),
-									rs.getString("PRODUCT_NAME"),
-									rs.getInt("STOCK"));
-//									rs.getInt("PRICE"),
-//									rs.getString("BUYDATE"),
-//									rs.getString("DELETE_NY"));
-					
+//				Product product = new Product(rs.getInt("BUY_NO"),
+////									rs.getString("CATEGORY"),
+//									rs.getString("PRODUCT_NAME"),
+//									rs.getInt("STOCK"),
+////									rs.getInt("PRICE"),
+//									rs.getString("BUYDATE"));
+////									rs.getString("DELETE_NY"));
+		int buyNo = rs.getInt("BUY_NO");
+		String productname = rs.getString("PRODUCT_NAME");
+		int productStock = rs.getInt("STOCK");
+		String buyDate = rs.getString("BUYDATE");
+				
+		Product product = new Product();
+		product.setBuyNo(buyNo);
+		product.setProductName(productname);
+		product.setProductStock(productStock);
+		product.setBuyDate(buyDate);
+		
 					resultList.add(product);
 			}
 		} finally {
@@ -115,6 +127,38 @@ public class ProductDAO {
 		}
 		
 		return result;
+	}
+
+	public List<Product> checkBuyProductList(Connection conn,int memberNo,int pMemberNo) throws Exception{
+
+		List<Product> productList = new ArrayList<>();
+		Product product = null;
+		
+		try {
+			String sql = prop.getProperty("checkBuyProductList");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				product = new Product();
+				
+				product.setProductNo(rs.getInt("PRODUCT_NO"));
+				product.setProductName(rs.getString("PRODUCT_NAME"));
+				product.setProductStock(rs.getInt("STOCK"));
+				
+				productList.add(product);
+			}
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return productList;
 	}
 	
 	
